@@ -1,0 +1,206 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TerminalNav from "../components/TerminalNav.astro";
+import Footer from "../components/Footer.astro";
+import TypedHeading from "../components/TypedHeading.jsx";
+import GlitchTransition from "../components/GlitchTransition.jsx";
+import ExperienceCard from "../components/ExperienceCard.astro";
+import GitTimeline from "../components/GitTimeline.astro";
+import { getCollection, getEntry } from "astro:content";
+import { skills, skillCategories } from "../data/skills.js";
+import { calculateDuration } from "../utils/dateUtils";
+
+const experienceEntries = await getCollection("experience");
+const experience = experienceEntries
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(async (entry) => {
+    const data = entry.data;
+
+    let duration = data.duration;
+    if (data.period.includes("Present")) {
+      const startDate = data.period.split("-")[0].trim();
+      duration = calculateDuration(startDate);
+    }
+
+    return {
+      ...data,
+      duration,
+      content: await entry.render(),
+    };
+  });
+
+const experienceWithContent = await Promise.all(experience);
+
+const terminalUI = await getEntry("ui", "terminal");
+if (!terminalUI) {
+  throw new Error("Terminal UI content not found");
+}
+
+const educationTimeline = [
+  {
+    year: "2014",
+    title: "B.S. in Computer Science",
+    subtitle: "University of Massachusetts - Boston",
+    location: "Boston, MA",
+    type: "education" as const,
+  },
+  {
+    year: "2014",
+    title: "B.A. in History/Political Science",
+    subtitle: "University of Massachusetts - Amherst",
+    location: "Amherst, MA",
+    type: "education" as const,
+  },
+];
+
+const certificationsTimeline = [
+  {
+    year: "2025",
+    title: "Sitecore 10 .NET Developer Certification",
+    subtitle: "Sitecore",
+    type: "certification" as const,
+  },
+  {
+    year: "2023",
+    title: "Google Analytics Certification",
+    subtitle: "Google",
+    type: "certification" as const,
+  },
+  {
+    year: "2018",
+    title: "ServiceNow Certified System Administrator",
+    subtitle: "ServiceNow",
+    type: "certification" as const,
+  },
+];
+---
+
+<Layout title="Experience">
+  <TerminalNav />
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+    <GlitchTransition client:only="react" trigger={true}>
+      <div class="terminal-window max-w-4xl mx-auto mb-12">
+        <TypedHeading
+          client:visible
+          strings={[terminalUI.data.strings.loadingCareerHistory]}
+          typeSpeed={50}
+          showCursor={false}
+          loop={false}
+          onComplete={() => {}}
+          className="font-display text-3xl md:text-4xl font-bold text-neon-cyan phosphor-glow mb-4"
+        />
+        <div class="font-mono text-sm text-neon-magenta pt-6">
+          <span class="text-neon-green">$</span> Displaying career
+        </div>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Experience Timeline (Left/Main Column) -->
+      <div class="flex-1 space-y-8">
+        {
+          experienceWithContent.map((job, index) => (
+            <ExperienceCard job={job} index={index} />
+          ))
+        }
+
+        <div class="mt-12 terminal-window text-center">
+          <div class="text-neon-magenta font-mono text-sm mb-4">
+            <span class="text-neon-green">&gt;</span> Total Experience: <span
+              class="text-neon-cyan font-bold">10+ Years</span
+            >
+          </div>
+          <div class="text-neon-cyan/70 font-mono text-xs">
+            System.Career.Status: <span class="text-neon-green">Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar (Skills, Education, Certifications) -->
+      <aside class="hidden lg:block lg:w-80 flex-shrink-0">
+        <div class="flex flex-col gap-6">
+          <!-- Skills Tree -->
+          <div class="terminal-window flex flex-col">
+            <h2
+              class="font-display text-xl font-bold text-neon-magenta mb-4 phosphor-glow flex-shrink-0"
+            >
+              <span class="text-neon-green">&gt;</span> ls -R skills/
+            </h2>
+            <div class="overflow-y-auto flex-1">
+              <pre
+                class="font-mono text-xs text-neon-cyan">
+<span class="text-neon-magenta">skills/</span>
+{skillCategories.map((category, catIndex) => {
+  const categoryData = skills[category as keyof typeof skills];
+  const isLastCategory = catIndex === skillCategories.length - 1;
+  const categoryPrefix = isLastCategory ? '└──' : '├──';
+
+  return `${categoryPrefix}${category}
+${categoryData.items.map((skill: string, skillIndex: number) => {
+  const isLastSkill = skillIndex === categoryData.items.length - 1;
+  const linePrefix = isLastCategory ? '    ' : '│   ';
+  const skillPrefix = isLastSkill ? '└──' : '├──';
+  return `${linePrefix}${skillPrefix} ${skill}`;
+}).join('\n')}`;
+}).join('\n')}
+
+{skillCategories.length} directories, {skillCategories.reduce((total, cat) => total + skills[cat as keyof typeof skills].items.length, 0)} files
+              </pre>
+            </div>
+          </div>
+
+          <!-- Education Timeline -->
+          <GitTimeline
+            title="git log --oneline --graph education/"
+            entries={educationTimeline}
+          />
+
+          <!-- Certifications Timeline -->
+          <GitTimeline
+            title="git log --oneline --graph certifications/"
+            entries={certificationsTimeline}
+          />
+        </div>
+      </aside>
+      </div>
+    </GlitchTransition>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  .experience-content :global(ul) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .experience-content :global(li) {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .experience-content :global(li::before) {
+    content: "├─";
+    color: rgb(255 0 110); /* neon-magenta */
+    flex-shrink: 0;
+  }
+</style>

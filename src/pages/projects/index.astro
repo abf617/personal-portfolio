@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TerminalNav from '../../components/TerminalNav.astro';
+import Footer from '../../components/Footer.astro';
 import GlitchTransition from '../../components/GlitchTransition.jsx';
 
 // Get all projects and sort by year (newest first)
@@ -34,7 +35,7 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.year - 
 		<!-- Projects Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
 			{projects.map((project) => (
-				<GlitchTransition client:visible glitchOnHover={true}>
+				<GlitchTransition client:visible>
 					<a
 						href={`/projects/${project.slug}`}
 						class="terminal-window block group hover:shadow-neon-magenta transition-all duration-300"
@@ -93,13 +94,5 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.year - 
 		)}
 	</main>
 
-	<!-- Footer -->
-	<footer class="border-t border-neon-cyan/30 py-6 mt-16">
-		<div class="container mx-auto px-6 text-center">
-			<p class="font-mono text-neon-cyan text-sm">
-				<span class="text-neon-green">&gt;</span> System.exit(0)
-				<span class="text-neon-magenta">// 2026</span>
-			</p>
-		</div>
-	</footer>
+	<Footer />
 </Layout>

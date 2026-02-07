@@ -1,0 +1,17 @@
+category: "forms"
+strings:
+  contact:
+    title: "> mail contact@"
+    status: "Initializing secure connection..."
+    nameLabel: "> Enter your name:"
+    namePlaceholder: "guest_user"
+    emailLabel: "> Enter your email:"
+    emailPlaceholder: "guest@example.com"
+    messageLabel: "> Enter your message:"
+    messagePlaceholder: "Type your message here..."
+    submitButtonKey: "[CTRL+S]"
+    submitButtonText: "Send message"
+    connectionMethodsTitle: "> Other connection methods:"
+    loading: "> Sending message... [████░░░░░░] 40%"
+    successPrefix: "✓ Message sent successfully! [███████████] 100%"
+    successTimestamp: "> Timestamp: "

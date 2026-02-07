@@ -1,0 +1,64 @@
+---
+interface Props {
+	job: {
+		title: string;
+		company: string;
+		location: string;
+		type: string;
+		period: string;
+		duration: string;
+		skills: string[];
+		content: {
+			Content: any;
+		};
+	};
+	index: number;
+}
+
+const { job, index } = Astro.props;
+const { Content } = job.content;
+---
+
+<div
+	class="terminal-window animate-fade-in"
+	style={`animation-delay: ${index * 0.1}s`}
+>
+	<div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+		<div class="flex-1">
+			<h3 class="text-neon-cyan text-xl md:text-2xl font-bold font-mono mb-1">
+				{job.title}
+			</h3>
+			<div class="text-neon-magenta font-mono text-lg mb-1">
+				{job.company}
+			</div>
+			<div class="text-neon-cyan/70 font-mono text-sm">
+				{job.location} · {job.type}
+			</div>
+		</div>
+		<div class="text-right mt-2 md:mt-0">
+			<div class="text-neon-green font-mono text-sm">
+				{job.period}
+			</div>
+			<div class="text-neon-green/70 font-mono text-xs">
+				{job.duration}
+			</div>
+		</div>
+	</div>
+
+	<div class="border-t border-neon-cyan/30 pt-4 mb-4">
+		<div class="text-neon-cyan font-mono text-sm mb-2 flex items-center gap-2">
+			<span class="text-neon-green">&gt;</span> Key Responsibilities:
+		</div>
+		<div class="text-neon-cyan/90 font-mono text-xs md:text-sm leading-relaxed ml-4 prose prose-invert prose-sm max-w-none experience-content">
+			<Content />
+		</div>
+	</div>
+
+	<div class="flex flex-wrap gap-2 pt-4 border-t border-neon-cyan/30">
+		{job.skills.map((skill) => (
+			<span class="px-3 py-1 text-xs font-mono bg-terminal-gray border border-neon-green/50 text-neon-green rounded phosphor-glow">
+				{skill}
+			</span>
+		))}
+	</div>
+</div>

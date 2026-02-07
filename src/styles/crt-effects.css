@@ -1,7 +1,7 @@
 /* CRT Screen wrapper with subtle curvature */
 .crt-wrapper {
 	position: relative;
-	overflow: hidden;
+	/* overflow: hidden; */ /* Removed to allow sticky positioning */
 	border-radius: 8px;
 }
 
@@ -77,11 +77,11 @@
 }
 
 .neon-border-green {
-	border: 2px solid #39FF14;
+	border: 2px solid #00FF41;
 	box-shadow:
-		0 0 5px #39FF14,
-		0 0 10px #39FF14,
-		inset 0 0 5px #39FF14;
+		0 0 5px #00FF41,
+		0 0 10px #00FF41,
+		inset 0 0 5px #00FF41;
 }
 
 /* Terminal window chrome */
@@ -91,6 +91,10 @@
 	border-radius: 6px;
 	box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
 	padding: 1rem;
+}
+
+.terminal-window.compact {
+	padding: 0.75rem;
 }
 
 .terminal-header {
@@ -110,8 +114,8 @@
 }
 
 .terminal-button.minimize {
-	background: #39FF14;
-	box-shadow: 0 0 5px #39FF14;
+	background: #00FF41;
+	box-shadow: 0 0 5px #00FF41;
 }
 
 .terminal-button.maximize {
@@ -170,6 +174,51 @@
 	z-index: -2;
 }
 
+/* Terminal Menu Cursor Blink */
+@keyframes cursor-blink {
+	0%, 50% { opacity: 1; }
+	51%, 100% { opacity: 0; }
+}
+
+.terminal-cursor {
+	animation: cursor-blink 1.5s infinite;
+}
+
+/* Loading Bar Animation */
+@keyframes loading-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.7; }
+}
+
+.loading-bar {
+	animation: loading-pulse 0.5s ease-in-out infinite;
+}
+
+/* Menu Selection Highlight */
+.menu-item-selected {
+	text-shadow:
+		0 0 10px currentColor,
+		0 0 20px currentColor;
+	transform: translateX(8px);
+	transition: all 0.2s ease;
+}
+
+/* Fade In Animation */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(-5px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fade-in {
+	animation: fade-in 0.2s ease-out;
+}
+
 /* Reduced motion: disable animations */
 @media (prefers-reduced-motion: reduce) {
 	.crt-wrapper::before {
@@ -184,5 +233,13 @@
 
 	.chromatic-aberration:hover {
 		transition: none;
+	}
+
+	.terminal-cursor {
+		animation: none;
+	}
+
+	.loading-bar {
+		animation: none;
 	}
 }

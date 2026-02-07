@@ -13,6 +13,41 @@ const projectsCollection = defineCollection({
 	}),
 });
 
+const pagesCollection = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		subtitle: z.string().optional(),
+		terminalCommand: z.string(),
+		status: z.string().optional(),
+	}),
+});
+
+const uiCollection = defineCollection({
+	type: 'data',
+	schema: z.object({
+		category: z.string(),
+		strings: z.record(z.string(), z.any()),
+	}),
+});
+
+const experienceCollection = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		company: z.string(),
+		location: z.string(),
+		period: z.string(),
+		duration: z.string(),
+		type: z.enum(['Full-time', 'Part-time', 'Freelance', 'Contract']),
+		skills: z.array(z.string()),
+		order: z.number(),
+	}),
+});
+
 export const collections = {
 	'projects': projectsCollection,
+	'pages': pagesCollection,
+	'ui': uiCollection,
+	'experience': experienceCollection,
 };

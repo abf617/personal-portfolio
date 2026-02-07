@@ -1,18 +1,12 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useGlitch } from 'react-powerglitch';
 
-/**
- * Glitch effect wrapper component
- * Uses react-powerglitch for RGB channel glitch effects
- * Can be triggered on hover or programmatically
- * Respects prefers-reduced-motion
- */
 export default function GlitchTransition({
 	children,
 	trigger = false,
-	glitchOnHover = false,
 	prefersReducedMotion = false,
 	className = '',
+	onComplete = () => {},
 }) {
 	const glitch = useGlitch({
 		playMode: trigger ? 'always' : 'hover',
@@ -40,7 +34,17 @@ export default function GlitchTransition({
 		},
 	});
 
-	// If user prefers reduced motion, render without glitch effect
+	useEffect(() => {
+		if (trigger && !prefersReducedMotion) {
+			const timer = setTimeout(() => {
+				onComplete();
+			}, 500);
+			return () => clearTimeout(timer);
+		} else if (prefersReducedMotion && trigger) {
+			onComplete();
+		}
+	}, [trigger, prefersReducedMotion, onComplete]);
+
 	if (prefersReducedMotion) {
 		return <div className={className}>{children}</div>;
 	}

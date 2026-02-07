@@ -1,0 +1,8 @@
+category: "terminal"
+strings:
+  bootMessage: "SYSTEM BOOT COMPLETE // WELCOME // SELECT OPERATION:"
+  mainframeWelcome: "SYSTEM BOOT COMPLETE // WELCOME TO MAINFRAME // SELECT OPERATION:"
+  bootInitiation: "Welcome... Initiating"
+  systemCapabilities: "> System Capabilities"
+  selectOption: "Select an option"
+  loadingCareerHistory: "> git log --career"

@@ -1,107 +1,110 @@
 ---
-/**
- * Terminal-style navigation component
- * Displays navigation links as terminal commands
- * Features glitch effect on hover and neon glow on active state
- */
+import TerminalInfo from "./TerminalInfo.jsx";
+import { navigation, homeNav } from "../data/navigation.js";
 
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-	{ path: '/', label: '> cd ~', title: 'Home' },
-	{ path: '/about', label: '> cat about.txt', title: 'About' },
-	{ path: '/projects', label: '> ls projects/', title: 'Projects' },
-	{ path: '/contact', label: '> mail contact@', title: 'Contact' },
+  { path: homeNav.path, label: homeNav.terminalLabel, title: homeNav.label },
+  ...navigation.map((item) => ({
+    path: item.path,
+    label: item.terminalLabel,
+    title: item.label,
+  })),
 ];
 ---
 
-<nav class="terminal-nav py-4 px-6">
-	<div class="container mx-auto flex flex-wrap items-center justify-between gap-4">
-		<!-- Logo / Brand -->
-		<div class="font-display text-2xl font-bold text-neon-cyan phosphor-glow">
-			<span class="text-neon-magenta">&gt;</span>_
-		</div>
+<nav class="terminal-nav pl-6 pr-10">
+  <div class="flex flex-wrap items-center justify-between gap-4 w-full">
+    <!-- Logo / Brand with System Info -->
+    <TerminalInfo client:load />
 
-		<!-- Desktop Navigation -->
-		<ul class="hidden md:flex gap-6 font-mono">
-			{navItems.map(({ path, label, title }) => {
-				const isActive = currentPath === path;
-				return (
-					<li>
-						<a
-							href={path}
-							title={title}
-							class={`
+    <!-- Desktop Navigation -->
+    <ul class="hidden md:flex gap-6 font-mono pr-4">
+      {
+        navItems.map(({ path, label, title }) => {
+          const isActive = currentPath === path;
+          return (
+            <li>
+              <a
+                href={path}
+                title={title}
+                class={`
 								relative inline-block px-3 py-2
 								transition-all duration-300
 								hover:text-neon-magenta
 								chromatic-aberration
-								${isActive ? 'text-neon-magenta phosphor-glow font-bold' : 'text-neon-cyan'}
+								${isActive ? "text-neon-magenta phosphor-glow font-bold" : "text-neon-cyan"}
 							`}
-							data-text={label}
-						>
-							{label}
-						</a>
-					</li>
-				);
-			})}
-		</ul>
+                data-text={label}
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
 
-		<!-- Mobile Navigation (Hamburger) -->
-		<button
-			id="mobile-menu-button"
-			class="md:hidden text-neon-cyan text-2xl phosphor-glow"
-			aria-label="Toggle menu"
-		>
-			<span class="font-mono">|||</span>
-		</button>
-	</div>
+    <!-- Mobile Navigation (Hamburger) -->
+    <button
+      id="mobile-menu-button"
+      class="md:hidden text-neon-cyan text-2xl phosphor-glow"
+      aria-label="Toggle menu"
+    >
+      <span class="font-mono">|||</span>
+    </button>
+  </div>
 
-	<!-- Mobile Menu -->
-	<div
-		id="mobile-menu"
-		class="hidden md:hidden mt-4 terminal-window"
-	>
-		<ul class="font-mono space-y-2">
-			{navItems.map(({ path, label, title }) => {
-				const isActive = currentPath === path;
-				return (
-					<li>
-						<a
-							href={path}
-							title={title}
-							class={`
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden mt-4 terminal-window">
+    <ul class="font-mono space-y-2">
+      {
+        navItems.map(({ path, label, title }) => {
+          const isActive = currentPath === path;
+          return (
+            <li>
+              <a
+                href={path}
+                title={title}
+                class={`
 								block px-3 py-2
 								transition-colors duration-300
 								hover:text-neon-magenta
-								${isActive ? 'text-neon-magenta font-bold' : 'text-neon-cyan'}
+								${isActive ? "text-neon-magenta font-bold" : "text-neon-cyan"}
 							`}
-						>
-							{label}
-						</a>
-					</li>
-				);
-			})}
-		</ul>
-	</div>
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
 </nav>
 
 <script>
-	// Mobile menu toggle
-	const button = document.getElementById('mobile-menu-button');
-	const menu = document.getElementById('mobile-menu');
+  // Mobile menu toggle
+  const button = document.getElementById("mobile-menu-button");
+  const menu = document.getElementById("mobile-menu");
 
-	if (button && menu) {
-		button.addEventListener('click', () => {
-			menu.classList.toggle('hidden');
-		});
-	}
+  if (button && menu) {
+    button.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  }
 </script>
 
 <style>
-	.terminal-nav {
-		background: rgba(26, 26, 26, 0.8);
-		backdrop-filter: blur(10px);
-		border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-	}
+  .terminal-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
 </style>

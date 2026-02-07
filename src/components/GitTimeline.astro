@@ -1,0 +1,96 @@
+---
+/**
+ * Git-style timeline component
+ * Displays chronological events in a git log --oneline --graph format
+ * Reusable for education, certifications, life events, etc.
+ */
+
+interface TimelineEntry {
+  year: string;
+  hash?: string; // Optional git-style hash
+  title: string;
+  subtitle?: string;
+  location?: string;
+  type?: 'education' | 'certification' | 'milestone' | 'achievement';
+}
+
+interface Props {
+  title: string;
+  entries: TimelineEntry[];
+  className?: string;
+}
+
+const { title, entries, className = '' } = Astro.props;
+
+// Generate a git-style hash from year + title
+const generateHash = (year: string, title: string) => {
+  const str = `${year}${title}`;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash = hash & hash;
+  }
+  return Math.abs(hash).toString(16).substring(0, 7);
+};
+
+// Sort entries by year (newest first)
+const sortedEntries = [...entries].sort((a, b) =>
+  parseInt(b.year) - parseInt(a.year)
+);
+---
+
+<div class={`terminal-window ${className}`}>
+  <h2 class="font-display text-xl font-bold text-neon-magenta mb-4 phosphor-glow flex-shrink-0">
+    <span class="text-neon-green">&gt;</span> {title}
+  </h2>
+
+  <div class="font-mono text-xs text-neon-cyan overflow-y-auto">
+    {sortedEntries.map((entry, index) => {
+      const hash = entry.hash || generateHash(entry.year, entry.title);
+      const isLast = index === sortedEntries.length - 1;
+
+      return (
+        <div class="mb-3">
+          {/* Git graph line with commit */}
+          <div class="flex gap-2">
+            <span class="text-neon-magenta">*</span>
+            <span class="text-neon-yellow">{hash}</span>
+            <span class="text-neon-green">({entry.year})</span>
+            <span class="text-neon-cyan font-semibold">{entry.title}</span>
+          </div>
+
+          {/* Additional details */}
+          {(entry.subtitle || entry.location) && (
+            <div class="ml-4 text-neon-cyan/70 text-xs">
+              {entry.location && (
+                <div class="flex gap-2">
+                  <span class="text-neon-magenta">{isLast ? ' ' : '│'}</span>
+                  <span class="text-neon-green">└─</span>
+                  <span>{entry.location}</span>
+                </div>
+              )}
+              {entry.subtitle && (
+                <div class="flex gap-2">
+                  <span class="text-neon-magenta">{isLast ? ' ' : '│'}</span>
+                  <span class="text-neon-green">└─</span>
+                  <span>{entry.subtitle}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    })}
+
+    <div class="mt-4 pt-2 border-t border-neon-cyan/30 text-neon-green/70">
+      {sortedEntries.length} commits
+    </div>
+  </div>
+</div>
+
+<style>
+  .text-neon-yellow {
+    color: #ffff00;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  }
+</style>

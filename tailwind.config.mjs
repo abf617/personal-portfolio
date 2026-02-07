@@ -6,7 +6,7 @@ export default {
 			colors: {
 				'neon-cyan': '#00F0FF',
 				'neon-magenta': '#FF006E',
-				'neon-green': '#39FF14',
+				'neon-green': '#00FF41',
 				'terminal-black': '#0a0a0a',
 				'terminal-gray': '#1a1a1a',
 			},
@@ -17,12 +17,12 @@ export default {
 			boxShadow: {
 				'neon-cyan': '0 0 10px #00F0FF, 0 0 20px #00F0FF, 0 0 30px #00F0FF',
 				'neon-magenta': '0 0 10px #FF006E, 0 0 20px #FF006E, 0 0 30px #FF006E',
-				'neon-green': '0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 30px #39FF14',
+				'neon-green': '0 0 10px #00FF41, 0 0 20px #00FF41, 0 0 30px #00FF41',
 			},
 			textShadow: {
 				'neon-cyan': '0 0 10px #00F0FF, 0 0 20px #00F0FF, 0 0 30px #00F0FF',
 				'neon-magenta': '0 0 10px #FF006E, 0 0 20px #FF006E, 0 0 30px #FF006E',
-				'neon-green': '0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 30px #39FF14',
+				'neon-green': '0 0 10px #00FF41, 0 0 20px #00FF41, 0 0 30px #00FF41',
 			},
 		},
 	},

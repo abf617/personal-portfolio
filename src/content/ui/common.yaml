@@ -1,0 +1,14 @@
+category: "common"
+strings:
+  footer:
+    exit: "> System.exit(0)"
+    year: "2026"
+  systemInfo:
+    ipLabel: "IP:"
+    timeLabel: "TIME:"
+    osLabel: "OS:"
+    browserLabel: "BR:"
+    tooltipHeader: "> system.info"
+    unknownValue: "UNKNOWN"
+    unknownBrowser: "Unknown"
+    unknownOS: "Unknown"

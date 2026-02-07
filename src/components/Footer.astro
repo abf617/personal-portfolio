@@ -1,0 +1,19 @@
+---
+/**
+ * Reusable footer component
+ * Displays terminal-style exit message with year
+ */
+import { getEntry } from 'astro:content';
+
+const commonUI = await getEntry('ui', 'common');
+const footer = commonUI.data.strings.footer;
+---
+
+<footer class="border-t border-neon-cyan/30 py-6 mt-auto">
+	<div class="flex justify-center items-center w-full">
+		<p class="font-mono text-neon-cyan text-sm">
+			{footer.exit}
+			<span class="text-neon-magenta">// {footer.year}</span>
+		</p>
+	</div>
+</footer>

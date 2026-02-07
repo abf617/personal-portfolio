@@ -1,17 +1,46 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
 
 * {
 	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+	/* margin: 0; */ /* Temporarily disabled to test if this breaks Tailwind utilities */
+	/* padding: 0; */ /* Temporarily disabled to test if this breaks Tailwind utilities */
+}
+
+/* Color cycling animation - starts with custom green #008F11 */
+@keyframes hue-rotate-animation {
+	0% {
+		filter: hue-rotate(90deg);   /* Start with darker green #008F11 */
+	}
+	50% {
+		filter: hue-rotate(0deg);    /* Shift to cyan */
+	}
+	100% {
+		filter: hue-rotate(90deg);   /* Back to darker green */
+	}
+}
+
+html {
+	/* overflow-x: hidden; */ /* Temporarily disabled to test sticky positioning */
+	width: 100%;
 }
 
 body {
 	background-color: #0a0a0a;
 	color: #00F0FF;
 	font-family: 'Space Mono', monospace;
-	overflow-x: hidden;
+	/* overflow-x: hidden; */ /* Disabled - breaks sticky positioning */
+	/* animation: hue-rotate-animation 15s ease-in-out infinite; */ /* Disabled - filter creates containing block that breaks sticky positioning */
+}
+
+/* Matrix background animation */
+.matrix-background {
+	animation: hue-rotate-animation 15s ease-in-out infinite;
+}
+
+/* Color rotation applied to content wrapper - doesn't break sticky since nav is rendered inside */
+.color-rotation {
+	animation: hue-rotate-animation 15s ease-in-out infinite;
 }
 
 /* Accessibility: Respect prefers-reduced-motion */
@@ -23,5 +52,9 @@ body {
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
+	}
+
+	body {
+		animation: none;
 	}
 }

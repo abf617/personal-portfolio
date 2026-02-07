@@ -28,9 +28,9 @@ const fullTitle = title === 'Portfolio' ? title : `${title} | Portfolio`;
 		<meta name="generator" content={Astro.generator} />
 		<title>{fullTitle}</title>
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen">
 		<MatrixBackground client:load />
-		<div class="crt-wrapper min-h-screen">
+		<div class="crt-wrapper flex-grow flex flex-col color-rotation">
 			<slot />
 		</div>
 	</body>
