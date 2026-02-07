@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/crt-effects.css';
 import MatrixBackground from '../components/MatrixBackground.jsx';
+import ConsoleGreeting from '../components/ConsoleGreeting.astro';
 
 interface Props {
 	title?: string;
@@ -9,11 +10,11 @@ interface Props {
 }
 
 const {
-	title = 'Portfolio',
-	description = '90s futurist cyberpunk portfolio website'
+	title = 'Allen Aronis Web Development',
+	description = '90s futurist cyberpunk portfolio website showcasing web development expertise'
 } = Astro.props;
 
-const fullTitle = title === 'Portfolio' ? title : `${title} | Portfolio`;
+const fullTitle = title === 'Allen Aronis Web Development' ? title : `${title} | Allen Aronis Web Development`;
 ---
 
 <!doctype html>
@@ -29,6 +30,7 @@ const fullTitle = title === 'Portfolio' ? title : `${title} | Portfolio`;
 		<title>{fullTitle}</title>
 	</head>
 	<body class="flex flex-col min-h-screen">
+		<ConsoleGreeting />
 		<MatrixBackground client:load />
 		<div class="crt-wrapper flex-grow flex flex-col color-rotation">
 			<slot />

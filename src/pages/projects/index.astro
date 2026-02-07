@@ -1,12 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TerminalNav from '../../components/TerminalNav.astro';
 import Footer from '../../components/Footer.astro';
 import GlitchTransition from '../../components/GlitchTransition.jsx';
 
 // Get all projects and sort by year (newest first)
-const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+const projects = (await getCollection('projects')).sort(
+	(a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => b.data.year - a.data.year
+);
 ---
 
 <Layout title="Projects" description="Browse my portfolio of projects">
@@ -34,7 +36,7 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.year - 
 
 		<!-- Projects Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-			{projects.map((project) => (
+			{projects.map((project: CollectionEntry<'projects'>) => (
 				<GlitchTransition client:visible>
 					<a
 						href={`/projects/${project.slug}`}
@@ -63,7 +65,7 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.year - 
 
 						{/* Tech Stack */}
 						<div class="flex flex-wrap gap-2">
-							{project.data.techStack.map((tech) => (
+							{project.data.techStack.map((tech: string) => (
 								<span class="font-mono text-xs px-2 py-1 border border-neon-cyan/30 text-neon-cyan rounded">
 									{tech}
 								</span>

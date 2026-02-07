@@ -15,11 +15,18 @@ export default function TypedHeading({
 	const el = useRef(null);
 	const typed = useRef(null);
 
+	// Use ref to store latest callback without causing effect re-runs
+	const onCompleteRef = useRef(onComplete);
+
+	useEffect(() => {
+		onCompleteRef.current = onComplete;
+	}, [onComplete]);
+
 	useEffect(() => {
 		if (prefersReducedMotion) {
 			if (el.current) {
 				el.current.textContent = strings[0];
-				onComplete?.();
+				onCompleteRef.current?.();
 			}
 			return;
 		}
@@ -34,7 +41,7 @@ export default function TypedHeading({
 				cursorChar,
 				contentType: 'text',
 				onComplete: () => {
-					onComplete?.();
+					onCompleteRef.current?.();
 				},
 			});
 		}
@@ -44,7 +51,7 @@ export default function TypedHeading({
 				typed.current.destroy();
 			}
 		};
-	}, [strings, typeSpeed, backSpeed, loop, showCursor, cursorChar, prefersReducedMotion, onComplete]);
+	}, [strings, typeSpeed, backSpeed, loop, showCursor, cursorChar, prefersReducedMotion]);
 
 	return (
 		<span

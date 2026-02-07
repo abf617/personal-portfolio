@@ -4,12 +4,9 @@ import TerminalNav from "../components/TerminalNav.astro";
 import Footer from "../components/Footer.astro";
 import GlitchTransition from "../components/GlitchTransition.jsx";
 import TypedHeading from "../components/TypedHeading.jsx";
-import { getEntry } from "astro:content";
+import { getRequiredEntry } from "../utils/contentUtils";
 
-const formsUI = await getEntry("ui", "forms");
-if (!formsUI) {
-  throw new Error("Forms UI content not found");
-}
+const formsUI = await getRequiredEntry("ui", "forms");
 const contactForm = formsUI.data.strings.contact;
 ---
 

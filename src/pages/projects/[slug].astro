@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TerminalNav from '../../components/TerminalNav.astro';
 import Footer from '../../components/Footer.astro';
@@ -8,13 +8,17 @@ import GlitchTransition from '../../components/GlitchTransition.jsx';
 // Generate static paths for all projects
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
-	return projects.map((project) => ({
+	return projects.map((project: CollectionEntry<'projects'>) => ({
 		params: { slug: project.slug },
 		props: { project },
 	}));
 }
 
-const { project } = Astro.props;
+type Props = {
+	project: CollectionEntry<'projects'>;
+};
+
+const { project } = Astro.props as Props;
 const { Content } = await project.render();
 ---
 
@@ -66,7 +70,7 @@ const { Content } = await project.render();
 							<span class="text-neon-cyan">&gt;</span> Tech Stack:
 						</div>
 						<div class="flex flex-wrap gap-2">
-							{project.data.techStack.map((tech) => (
+							{project.data.techStack.map((tech: string) => (
 								<span class="font-mono text-sm px-3 py-1 neon-border-cyan text-neon-cyan rounded">
 									{tech}
 								</span>

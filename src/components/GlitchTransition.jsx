@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useGlitch } from 'react-powerglitch';
 
 export default function GlitchTransition({
@@ -8,6 +8,12 @@ export default function GlitchTransition({
 	className = '',
 	onComplete = () => {},
 }) {
+	// Use ref to store latest callback without causing effect re-runs
+	const onCompleteRef = useRef(onComplete);
+
+	useEffect(() => {
+		onCompleteRef.current = onComplete;
+	}, [onComplete]);
 	const glitch = useGlitch({
 		playMode: trigger ? 'always' : 'hover',
 		createContainers: true,
@@ -37,13 +43,13 @@ export default function GlitchTransition({
 	useEffect(() => {
 		if (trigger && !prefersReducedMotion) {
 			const timer = setTimeout(() => {
-				onComplete();
+				onCompleteRef.current();
 			}, 500);
 			return () => clearTimeout(timer);
 		} else if (prefersReducedMotion && trigger) {
-			onComplete();
+			onCompleteRef.current();
 		}
-	}, [trigger, prefersReducedMotion, onComplete]);
+	}, [trigger, prefersReducedMotion]);
 
 	if (prefersReducedMotion) {
 		return <div className={className}>{children}</div>;

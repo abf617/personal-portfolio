@@ -1,14 +1,14 @@
 ---
-title: "Cyberpunk Portfolio Website"
+title: "Allen Aronis - Portfolio Website"
 description: "A 90s futurist terminal-inspired portfolio built with Astro, React, and Tailwind CSS featuring Matrix animations, CRT effects, and glitch transitions."
 techStack: ["Astro", "React", "Tailwind CSS", "TypeScript"]
 year: 2026
 featured: true
 ---
 
-# Cyberpunk Portfolio
+# Allen Aronis Portfolio
 
-This portfolio website showcases a unique 90s cyberpunk aesthetic with modern web technologies.
+This personal portfolio website showcases a unique 90s cyberpunk aesthetic combined with modern web technologies to create an immersive terminal experience.
 
 ## Features
 

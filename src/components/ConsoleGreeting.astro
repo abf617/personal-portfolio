@@ -1,0 +1,83 @@
+---
+/**
+ * Console greeting with ASCII art easter egg
+ * Displays a message in the browser console for curious developers
+ */
+---
+
+<script>
+  // ASCII art banner
+  const banner = `
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║     █████╗ ██╗     ██╗     ███████╗███╗   ██╗                   ║
+║    ██╔══██╗██║     ██║     ██╔════╝████╗  ██║                   ║
+║    ███████║██║     ██║     █████╗  ██╔██╗ ██║                   ║
+║    ██╔══██║██║     ██║     ██╔══╝  ██║╚██╗██║                   ║
+║    ██║  ██║███████╗███████╗███████╗██║ ╚████║                   ║
+║    ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═══╝                   ║
+║                                                                   ║
+║     █████╗ ██████╗  ██████╗ ███╗   ██╗██╗███████╗               ║
+║    ██╔══██╗██╔══██╗██╔═══██╗████╗  ██║██║██╔════╝               ║
+║    ███████║██████╔╝██║   ██║██╔██╗ ██║██║███████╗               ║
+║    ██╔══██║██╔══██╗██║   ██║██║╚██╗██║██║╚════██║               ║
+║    ██║  ██║██║  ██║╚██████╔╝██║ ╚████║██║███████║               ║
+║    ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝               ║
+║                                                                   ║
+║               W E B   D E V E L O P M E N T                      ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+`;
+
+  const styles = {
+    banner: "color: #00ff41; font-weight: bold; font-family: monospace;",
+    cyan: "color: #00d9ff; font-weight: bold; font-size: 14px;",
+    magenta: "color: #ff00ff; font-weight: bold; font-size: 14px;",
+    green: "color: #00ff41; font-weight: bold; font-size: 14px;",
+    white: "color: #ffffff; font-size: 13px;",
+    link: "color: #00d9ff; font-weight: bold; font-size: 14px; text-decoration: underline;",
+  };
+
+  // Clear console and display greeting
+  console.clear();
+  console.log("%c" + banner, styles.banner);
+  console.log("%c> I see you're checking under the hood.", styles.cyan);
+  console.log(
+    "%c> %cGet in touch: %c" + window.location.origin + "/contact",
+    styles.cyan,
+    styles.magenta,
+    styles.link,
+  );
+  // console.log("%c│ %cI see you're checking under the hood.", styles.magenta);
+  // console.log("%c│", styles.white);
+  // console.log(
+  //   '%c│ %cLooking for a developer who:\n%c│   %c✓ Writes clean, maintainable code\n%c│   %c✓ Loves terminal aesthetics\n%c│   %c✓ Builds performant, accessible sites\n%c│   %c✓ Hides easter eggs in console logs\n%c│',
+  //   styles.white,
+  //   styles.magenta,
+  //   styles.white,
+  //   styles.green,
+  //   styles.white,
+  //   styles.green,
+  //   styles.white,
+  //   styles.green,
+  //   styles.white,
+  //   styles.green,
+  //   styles.white
+  // );
+  // console.log("%c│", styles.white);
+  // console.log(
+  //   "%c│ %cLet's build something awesome together!\n%c│",
+  //   styles.white,
+  //   styles.cyan,
+  //   styles.white,
+  // );
+  // console.log(
+  //   "%c│ %cGet in touch: %c" + window.location.origin + "/contact",
+  //   styles.link,
+  // );
+  // console.log(
+  //   "%c└─────────────────────────────────────────────────",
+  //   styles.white,
+  // );
+  console.log("%c", "padding: 4px;");
+</script>

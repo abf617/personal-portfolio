@@ -1,6 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;500;700;900&display=swap');
 @import "tailwindcss";
 
+:root {
+	/* Animation Durations */
+	--duration-fast: 0.1s;
+	--duration-normal: 0.5s;
+	--duration-slow: 1.5s;
+	--duration-cycle: 15s;
+
+	/* Glow Effects */
+	--glow-sm: 5px;
+	--glow-md: 10px;
+	--glow-lg: 20px;
+	--glow-xl: 30px;
+
+	/* Z-Index Layers */
+	--z-scanline: 9999;
+	--z-overlay: 9998;
+	--z-nav: 50;
+
+	/* Opacity Levels */
+	--opacity-fade: 0.05;
+	--opacity-dim: 0.3;
+	--opacity-bright: 0.95;
+
+	/* Border Radius */
+	--radius-sm: 6px;
+	--radius-md: 8px;
+}
+
 * {
 	box-sizing: border-box;
 	/* margin: 0; */ /* Temporarily disabled to test if this breaks Tailwind utilities */

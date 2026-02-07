@@ -4,12 +4,9 @@ import TerminalNav from "../components/TerminalNav.astro";
 import GlitchTransition from "../components/GlitchTransition.jsx";
 import Footer from "../components/Footer.astro";
 import TypedHeading from "../components/TypedHeading.jsx";
-import { getEntry } from "astro:content";
+import { getRequiredEntry } from "../utils/contentUtils";
 
-const aboutPage = await getEntry("pages", "about");
-if (!aboutPage) {
-  throw new Error("About page content not found");
-}
+const aboutPage = await getRequiredEntry("pages", "about");
 const { Content } = await aboutPage.render();
 ---
 

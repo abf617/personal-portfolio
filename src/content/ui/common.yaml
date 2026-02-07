@@ -1,7 +1,7 @@
 category: "common"
 strings:
   footer:
-    exit: "> System.exit(0)"
+    exit: "> Allen Aronis Web Development"
     year: "2026"
   systemInfo:
     ipLabel: "IP:"

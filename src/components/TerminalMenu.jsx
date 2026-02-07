@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import TypedHeading from './TypedHeading';
 import GlitchTransition from './GlitchTransition';
 import { navigation } from '../data/navigation.js';
@@ -20,6 +20,13 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 	const [glitchTrigger, setGlitchTrigger] = useState(false);
 	const [pendingPath, setPendingPath] = useState(null);
 
+	// Use ref to store latest userInput to avoid event listener churn
+	const userInputRef = useRef(userInput);
+
+	useEffect(() => {
+		userInputRef.current = userInput;
+	}, [userInput]);
+
 	const renderProgressBar = (progress) => {
 		const filled = Math.floor(progress / 10);
 		const empty = 10 - filled;
@@ -32,48 +39,48 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 		setTimeout(() => setGlitchTrigger(false), 600);
 	};
 
-	const startLoadingAnimation = (targetPath) => {
+	const startLoadingAnimation = useCallback((targetPath) => {
 		if (prefersReducedMotion) {
 			window.location.href = targetPath;
 			return;
 		}
 
 		setIsLoading(true);
-		let progress = 0;
+		const startTime = Date.now();
+		const duration = 1000; // 1 second total duration
+		let animationFrameId;
 
-		const interval = setInterval(() => {
-			progress += 10;
+		const updateProgress = () => {
+			const elapsed = Date.now() - startTime;
+			const progress = Math.min(Math.round((elapsed / duration) * 100), 100);
+
 			setLoadingProgress(progress);
 
-			if (progress >= 100) {
-				clearInterval(interval);
+			if (progress < 100) {
+				animationFrameId = requestAnimationFrame(updateProgress);
+			} else {
 				setTimeout(() => {
 					window.location.href = targetPath;
 				}, 200);
 			}
-		}, 100);
-	};
+		};
 
-	const handleSelection = (index) => {
+		animationFrameId = requestAnimationFrame(updateProgress);
+
+		// Cleanup function
+		return () => {
+			if (animationFrameId) {
+				cancelAnimationFrame(animationFrameId);
+			}
+		};
+	}, [prefersReducedMotion]);
+
+	const handleSelection = useCallback((index) => {
 		if (isLoading || !typingComplete) return;
 
 		// Start loading animation directly (glitch re-triggering is not reliable)
 		startLoadingAnimation(menuOptions[index].path);
-	};
-
-	const handleTextInput = (char) => {
-		const newInput = (userInput + char).toLowerCase();
-		setUserInput(newInput);
-
-		const match = menuOptions.find(opt =>
-			opt.keywords.some(kw => kw.startsWith(newInput))
-		);
-
-		if (match && match.label.toLowerCase() === newInput) {
-			const matchIndex = menuOptions.findIndex(opt => opt.id === match.id);
-			handleSelection(matchIndex);
-		}
-	};
+	}, [isLoading, typingComplete, startLoadingAnimation]);
 
 	useEffect(() => {
 		if (!typingComplete || isLoading) return;
@@ -94,7 +101,18 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 				e.preventDefault();
 				handleSelection(parseInt(e.key) - 1);
 			} else if (/^[a-zA-Z]$/.test(e.key)) {
-				handleTextInput(e.key);
+				// Inline text input logic to avoid dependency churn
+				const newInput = (userInputRef.current + e.key).toLowerCase();
+				setUserInput(newInput);
+
+				const match = menuOptions.find(opt =>
+					opt.keywords.some(kw => kw.startsWith(newInput))
+				);
+
+				if (match && match.label.toLowerCase() === newInput) {
+					const matchIndex = menuOptions.findIndex(opt => opt.id === match.id);
+					handleSelection(matchIndex);
+				}
 			} else if (e.key === 'Escape') {
 				setUserInput('');
 			} else if (e.key === 'Backspace') {
@@ -105,7 +123,7 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 
 		window.addEventListener('keydown', handleKeyDown);
 		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, [selectedIndex, typingComplete, isLoading, userInput]);
+	}, [selectedIndex, typingComplete, isLoading, handleSelection]);
 
 	useEffect(() => {
 		const handleBootComplete = () => {

@@ -6,14 +6,18 @@ import TypedHeading from "../components/TypedHeading.jsx";
 import GlitchTransition from "../components/GlitchTransition.jsx";
 import ExperienceCard from "../components/ExperienceCard.astro";
 import GitTimeline from "../components/GitTimeline.astro";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getRequiredEntry } from "../utils/contentUtils";
 import { skills, skillCategories } from "../data/skills.js";
 import { calculateDuration } from "../utils/dateUtils";
 
 const experienceEntries = await getCollection("experience");
 const experience = experienceEntries
-  .sort((a, b) => a.data.order - b.data.order)
-  .map(async (entry) => {
+  .sort(
+    (a: CollectionEntry<"experience">, b: CollectionEntry<"experience">) =>
+      a.data.order - b.data.order,
+  )
+  .map(async (entry: CollectionEntry<"experience">) => {
     const data = entry.data;
 
     let duration = data.duration;
@@ -31,48 +35,21 @@ const experience = experienceEntries
 
 const experienceWithContent = await Promise.all(experience);
 
-const terminalUI = await getEntry("ui", "terminal");
-if (!terminalUI) {
-  throw new Error("Terminal UI content not found");
-}
+const terminalUI = await getRequiredEntry("ui", "terminal");
 
-const educationTimeline = [
-  {
-    year: "2014",
-    title: "B.S. in Computer Science",
-    subtitle: "University of Massachusetts - Boston",
-    location: "Boston, MA",
-    type: "education" as const,
-  },
-  {
-    year: "2014",
-    title: "B.A. in History/Political Science",
-    subtitle: "University of Massachusetts - Amherst",
-    location: "Amherst, MA",
-    type: "education" as const,
-  },
-];
+// Load education and certifications from content collections
+const educationEntries = await getCollection("education");
+const educationTimeline = educationEntries.map(
+  (entry: CollectionEntry<"education">) => entry.data,
+);
 
-const certificationsTimeline = [
-  {
-    year: "2025",
-    title: "Sitecore 10 .NET Developer Certification",
-    subtitle: "Sitecore",
-    type: "certification" as const,
-  },
-  {
-    year: "2023",
-    title: "Google Analytics Certification",
-    subtitle: "Google",
-    type: "certification" as const,
-  },
-  {
-    year: "2018",
-    title: "ServiceNow Certified System Administrator",
-    subtitle: "ServiceNow",
-    type: "certification" as const,
-  },
-];
+const certificationsEntries = await getCollection("certifications");
+const certificationsTimeline = certificationsEntries
+  .map((entry: CollectionEntry<"certifications">) => entry.data)
+  .sort(
+    (a: CollectionEntry<"experience">, b: CollectionEntry<"experience">) =>
+      parseInt(b.year) - parseInt(a.year),
+  ); // Sort by year descending
 ---
 
 <Layout title="Experience">
@@ -96,39 +73,39 @@ const certificationsTimeline = [
       </div>
 
       <div class="flex flex-col lg:flex-row gap-8">
-      <!-- Experience Timeline (Left/Main Column) -->
-      <div class="flex-1 space-y-8">
-        {
-          experienceWithContent.map((job, index) => (
-            <ExperienceCard job={job} index={index} />
-          ))
-        }
+        <!-- Experience Timeline (Left/Main Column) -->
+        <div class="flex-1 space-y-8">
+          {
+            experienceWithContent.map((job, index) => (
+              <ExperienceCard job={job} index={index} />
+            ))
+          }
 
-        <div class="mt-12 terminal-window text-center">
-          <div class="text-neon-magenta font-mono text-sm mb-4">
-            <span class="text-neon-green">&gt;</span> Total Experience: <span
-              class="text-neon-cyan font-bold">10+ Years</span
-            >
-          </div>
-          <div class="text-neon-cyan/70 font-mono text-xs">
-            System.Career.Status: <span class="text-neon-green">Active</span>
+          <div class="mt-12 terminal-window text-center">
+            <div class="text-neon-magenta font-mono text-sm mb-4">
+              <span class="text-neon-green">&gt;</span> Total Experience: <span
+                class="text-neon-cyan font-bold">10+ Years</span
+              >
+            </div>
+            <div class="text-neon-cyan/70 font-mono text-xs">
+              System.Career.Status: <span class="text-neon-green">Active</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Right Sidebar (Skills, Education, Certifications) -->
-      <aside class="hidden lg:block lg:w-80 flex-shrink-0">
-        <div class="flex flex-col gap-6">
-          <!-- Skills Tree -->
-          <div class="terminal-window flex flex-col">
-            <h2
-              class="font-display text-xl font-bold text-neon-magenta mb-4 phosphor-glow flex-shrink-0"
-            >
-              <span class="text-neon-green">&gt;</span> ls -R skills/
-            </h2>
-            <div class="overflow-y-auto flex-1">
-              <pre
-                class="font-mono text-xs text-neon-cyan">
+        <!-- Right Sidebar (Skills, Education, Certifications) -->
+        <aside class="hidden lg:block lg:w-80 flex-shrink-0">
+          <div class="flex flex-col gap-6">
+            <!-- Skills Tree -->
+            <div class="terminal-window flex flex-col">
+              <h2
+                class="font-display text-xl font-bold text-neon-magenta mb-4 phosphor-glow flex-shrink-0"
+              >
+                <span class="text-neon-green">&gt;</span> ls -R skills/
+              </h2>
+              <div class="overflow-y-auto flex-1">
+                <pre
+                  class="font-mono text-xs text-neon-cyan">
 <span class="text-neon-magenta">skills/</span>
 {skillCategories.map((category, catIndex) => {
   const categoryData = skills[category as keyof typeof skills];
@@ -146,22 +123,22 @@ ${categoryData.items.map((skill: string, skillIndex: number) => {
 
 {skillCategories.length} directories, {skillCategories.reduce((total, cat) => total + skills[cat as keyof typeof skills].items.length, 0)} files
               </pre>
+              </div>
             </div>
+
+            <!-- Education Timeline -->
+            <GitTimeline
+              title="git log --oneline --graph education/"
+              entries={educationTimeline}
+            />
+
+            <!-- Certifications Timeline -->
+            <GitTimeline
+              title="git log --oneline --graph certifications/"
+              entries={certificationsTimeline}
+            />
           </div>
-
-          <!-- Education Timeline -->
-          <GitTimeline
-            title="git log --oneline --graph education/"
-            entries={educationTimeline}
-          />
-
-          <!-- Certifications Timeline -->
-          <GitTimeline
-            title="git log --oneline --graph certifications/"
-            entries={certificationsTimeline}
-          />
-        </div>
-      </aside>
+        </aside>
       </div>
     </GlitchTransition>
   </main>

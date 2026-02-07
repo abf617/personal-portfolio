@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 /**
  * Detects if the user prefers reduced motion based on OS/browser settings
  * Server-side: defaults to safe (reduced motion)
@@ -23,11 +25,11 @@ export function usePrefersReducedMotion(): boolean {
 		return true;
 	}
 
-	const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(
+	const [prefersReducedMotion, setPrefersReducedMotion] = useState(
 		getPrefersReducedMotion()
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 		const handleChange = () => {
@@ -44,6 +46,3 @@ export function usePrefersReducedMotion(): boolean {
 
 	return prefersReducedMotion;
 }
-
-// For environments where React isn't available, export standalone version
-declare const React: any;

@@ -45,9 +45,32 @@ const experienceCollection = defineCollection({
 	}),
 });
 
+const educationCollection = defineCollection({
+	type: 'data',
+	schema: z.object({
+		year: z.string(),
+		title: z.string(),
+		subtitle: z.string(),
+		location: z.string(),
+		type: z.literal('education'),
+	}),
+});
+
+const certificationsCollection = defineCollection({
+	type: 'data',
+	schema: z.object({
+		year: z.string(),
+		title: z.string(),
+		subtitle: z.string(),
+		type: z.literal('certification'),
+	}),
+});
+
 export const collections = {
 	'projects': projectsCollection,
 	'pages': pagesCollection,
 	'ui': uiCollection,
 	'experience': experienceCollection,
+	'education': educationCollection,
+	'certifications': certificationsCollection,
 };

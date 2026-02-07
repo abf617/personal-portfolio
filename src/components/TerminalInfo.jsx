@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 /**
  * Terminal info display component
@@ -7,27 +7,63 @@ import React, { useState, useEffect } from 'react';
  */
 export default function TerminalInfo() {
 	const [ipAddress, setIpAddress] = useState('...');
-	const [currentTime, setCurrentTime] = useState('');
 	const [isHovered, setIsHovered] = useState(false);
 	const [os, setOs] = useState('...');
 	const [browser, setBrowser] = useState('...');
 
-	// Fetch user's public IP address
+	// Use refs to update time without re-renders
+	const timeRef = useRef(null);
+	const timeRefMobile = useRef(null);
+
+	// Fetch user's public IP address with timeout and validation
 	useEffect(() => {
-		fetch('https://api.ipify.org?format=json')
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+		fetch('https://api.ipify.org?format=json', {
+			signal: controller.signal
+		})
 			.then(res => res.json())
-			.then(data => setIpAddress(data.ip))
-			.catch(() => setIpAddress('UNKNOWN'));
+			.then(data => {
+				clearTimeout(timeoutId);
+				// Validate IP format (simple IPv4 check)
+				if (data.ip && /^(\d{1,3}\.){3}\d{1,3}$/.test(data.ip)) {
+					setIpAddress(data.ip);
+				} else {
+					setIpAddress('INVALID');
+				}
+			})
+			.catch((error) => {
+				clearTimeout(timeoutId);
+				if (error.name === 'AbortError') {
+					setIpAddress('TIMEOUT');
+				} else {
+					setIpAddress('UNAVAILABLE');
+				}
+			});
+
+		return () => {
+			clearTimeout(timeoutId);
+			controller.abort();
+		};
 	}, []);
 
-	// Update time every second
+	// Update time every second using direct DOM manipulation to avoid re-renders
 	useEffect(() => {
 		const updateTime = () => {
 			const now = new Date();
 			const hours = String(now.getHours()).padStart(2, '0');
 			const minutes = String(now.getMinutes()).padStart(2, '0');
 			const seconds = String(now.getSeconds()).padStart(2, '0');
-			setCurrentTime(`${hours}:${minutes}:${seconds}`);
+			const timeString = `${hours}:${minutes}:${seconds}`;
+
+			// Update both refs directly without triggering re-render
+			if (timeRef.current) {
+				timeRef.current.textContent = timeString;
+			}
+			if (timeRefMobile.current) {
+				timeRefMobile.current.textContent = timeString;
+			}
 		};
 
 		updateTime();
@@ -60,6 +96,12 @@ export default function TerminalInfo() {
 			className="relative flex items-center gap-4 font-mono text-sm"
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
+			onFocus={() => setIsHovered(true)}
+			onBlur={() => setIsHovered(false)}
+			tabIndex={0}
+			role="button"
+			aria-label="System information"
+			aria-expanded={isHovered}
 		>
 			{/* Terminal Prompt */}
 			<div className="font-display text-2xl font-bold text-neon-cyan phosphor-glow cursor-pointer">
@@ -78,7 +120,7 @@ export default function TerminalInfo() {
 				{/* Time */}
 				<span className="text-neon-cyan">[</span>
 				<span className="text-neon-magenta">TIME:</span>
-				<span className="tabular-nums">{currentTime}</span>
+				<span ref={timeRef} className="tabular-nums">--:--:--</span>
 				<span className="text-neon-cyan">]</span>
 
 				{/* OS */}
@@ -111,7 +153,7 @@ export default function TerminalInfo() {
 							<span className="text-neon-magenta">BR:</span> {browser}
 						</div>
 						<div>
-							<span className="text-neon-magenta">TIME:</span> {currentTime}
+							<span className="text-neon-magenta">TIME:</span> <span ref={timeRefMobile}>--:--:--</span>
 						</div>
 					</div>
 				</div>

@@ -1,0 +1,28 @@
+---
+import TypedHeading from './TypedHeading.jsx';
+
+interface Props {
+	title: string;
+	status?: string;
+	className?: string;
+}
+
+const { title, status, className = '' } = Astro.props;
+---
+
+<div class:list={["terminal-window max-w-4xl mx-auto mb-12", className]}>
+	<TypedHeading
+		client:visible
+		strings={[title]}
+		typeSpeed={50}
+		showCursor={false}
+		loop={false}
+		onComplete={() => {}}
+		className="font-display text-3xl md:text-4xl font-bold text-neon-cyan phosphor-glow mb-4"
+	/>
+	{status && (
+		<div class="font-mono text-sm text-neon-magenta pt-6">
+			<span class="text-neon-green">$</span> {status}
+		</div>
+	)}
+</div>

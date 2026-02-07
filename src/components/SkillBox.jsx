@@ -25,8 +25,8 @@ export default function SkillBox({
 
 			{typingComplete && (
 				<ul className={`font-mono text-neon-cyan ${compact ? 'text-sm space-y-2' : 'text-base space-y-4'}`}>
-					{skills.map((skill, index) => (
-						<li key={index}>{skill}</li>
+					{skills.map((skill) => (
+						<li key={skill}>{skill}</li>
 					))}
 				</ul>
 			)}
