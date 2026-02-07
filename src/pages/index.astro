@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TerminalNav from '../components/TerminalNav.astro';
+import TypedHeading from '../components/TypedHeading.jsx';
+import GlitchTransition from '../components/GlitchTransition.jsx';
+---
+
+<Layout title="Home">
+	<TerminalNav />
+
+	<main class="container mx-auto px-6 py-12">
+		<!-- Hero Section -->
+		<section class="min-h-[80vh] flex flex-col justify-center items-center text-center">
+			<GlitchTransition client:visible>
+				<!-- ASCII Art Logo -->
+				<pre class="text-neon-cyan text-xs md:text-sm mb-8 phosphor-glow font-mono">
+{`
+ ██████╗ ██╗   ██╗██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗███╗   ██╗██╗  ██╗
+██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██╔══██╗██║   ██║████╗  ██║██║ ██╔╝
+██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝██████╔╝██║   ██║██╔██╗ ██║█████╔╝
+██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗██╔═══╝ ██║   ██║██║╚██╗██║██╔═██╗
+╚██████╗   ██║   ██████╔╝███████╗██║  ██║██║     ╚██████╔╝██║ ╚████║██║  ██╗
+ ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝
+`}
+				</pre>
+
+				<!-- Terminal Prompt -->
+				<div class="mb-6 font-mono">
+					<span class="text-neon-green">guest@portfolio</span>
+					<span class="text-white">:</span>
+					<span class="text-neon-magenta">~</span>
+					<span class="text-white">$ </span>
+					<TypedHeading
+						client:visible
+						strings={[
+							'I build cybernetic dreams',
+							'Full-stack developer',
+							'UI/UX architect',
+							'Digital craftsman'
+						]}
+						typeSpeed={60}
+						backSpeed={40}
+						className="text-2xl md:text-4xl font-bold"
+					/>
+				</div>
+
+				<!-- Introduction -->
+				<p class="text-neon-cyan max-w-2xl mx-auto text-lg md:text-xl mb-8 leading-relaxed">
+					Welcome to the mainframe. I craft immersive digital experiences
+					at the intersection of art and technology.
+				</p>
+
+				<!-- CTA Buttons -->
+				<div class="flex flex-col md:flex-row gap-4 justify-center">
+					<a
+						href="/projects"
+						class="terminal-window px-6 py-3 font-mono text-neon-cyan hover:text-neon-magenta transition-colors duration-300 chromatic-aberration"
+					>
+						<span class="text-neon-green">&gt;</span> ./view_projects.sh
+					</a>
+					<a
+						href="/contact"
+						class="terminal-window px-6 py-3 font-mono text-neon-cyan hover:text-neon-magenta transition-colors duration-300 chromatic-aberration"
+					>
+						<span class="text-neon-green">&gt;</span> ./contact.exe
+					</a>
+				</div>
+			</GlitchTransition>
+		</section>
+
+		<!-- Featured Skills Section -->
+		<section class="py-16">
+			<GlitchTransition client:visible>
+				<h2 class="font-display text-3xl md:text-4xl font-bold text-neon-magenta mb-8 text-center phosphor-glow">
+					<span class="text-neon-cyan">&gt;</span> System Capabilities
+				</h2>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<!-- Frontend -->
+					<div class="terminal-window">
+						<div class="terminal-header">
+							<div class="terminal-button maximize"></div>
+							<div class="terminal-button minimize"></div>
+							<div class="terminal-button"></div>
+						</div>
+						<h3 class="font-mono text-neon-green text-xl mb-4">&gt; Frontend_</h3>
+						<ul class="font-mono text-sm space-y-2 text-neon-cyan">
+							<li>├─ React / Astro</li>
+							<li>├─ TypeScript</li>
+							<li>├─ Tailwind CSS</li>
+							<li>└─ Next.js</li>
+						</ul>
+					</div>
+
+					<!-- Backend -->
+					<div class="terminal-window">
+						<div class="terminal-header">
+							<div class="terminal-button maximize"></div>
+							<div class="terminal-button minimize"></div>
+							<div class="terminal-button"></div>
+						</div>
+						<h3 class="font-mono text-neon-green text-xl mb-4">&gt; Backend_</h3>
+						<ul class="font-mono text-sm space-y-2 text-neon-cyan">
+							<li>├─ Node.js</li>
+							<li>├─ Python</li>
+							<li>├─ PostgreSQL</li>
+							<li>└─ REST APIs</li>
+						</ul>
+					</div>
+
+					<!-- Tools -->
+					<div class="terminal-window">
+						<div class="terminal-header">
+							<div class="terminal-button maximize"></div>
+							<div class="terminal-button minimize"></div>
+							<div class="terminal-button"></div>
+						</div>
+						<h3 class="font-mono text-neon-green text-xl mb-4">&gt; Tools_</h3>
+						<ul class="font-mono text-sm space-y-2 text-neon-cyan">
+							<li>├─ Git</li>
+							<li>├─ Docker</li>
+							<li>├─ VS Code</li>
+							<li>└─ Figma</li>
+						</ul>
+					</div>
+				</div>
+			</GlitchTransition>
+		</section>
+	</main>
+
+	<!-- Footer -->
+	<footer class="border-t border-neon-cyan/30 py-6">
+		<div class="container mx-auto px-6 text-center">
+			<p class="font-mono text-neon-cyan text-sm">
+				<span class="text-neon-green">&gt;</span> System.exit(0)
+				<span class="text-neon-magenta">// 2026</span>
+			</p>
+		</div>
+	</footer>
+</Layout>

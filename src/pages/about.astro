@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TerminalNav from '../components/TerminalNav.astro';
+import GlitchTransition from '../components/GlitchTransition.jsx';
+---
+
+<Layout title="About" description="Learn more about me and my journey in development">
+	<TerminalNav />
+
+	<main class="container mx-auto px-6 py-12">
+		<GlitchTransition client:visible>
+			<!-- Page Header -->
+			<div class="terminal-window max-w-4xl mx-auto mb-12">
+				<div class="terminal-header">
+					<div class="terminal-button maximize"></div>
+					<div class="terminal-button minimize"></div>
+					<div class="terminal-button"></div>
+				</div>
+				<h1 class="font-display text-4xl md:text-5xl font-bold text-neon-cyan mb-4 phosphor-glow">
+					<span class="text-neon-green">&gt;</span> cat about.txt
+				</h1>
+				<div class="font-mono text-sm text-neon-magenta">
+					<span class="text-neon-green">$</span> Reading file: ~/about.txt
+				</div>
+			</div>
+
+			<!-- Bio Section -->
+			<section class="max-w-4xl mx-auto mb-16">
+				<div class="terminal-window">
+					<pre class="font-mono text-neon-cyan text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+<span class="text-neon-green">OUTPUT:</span>
+
+Hello, world! I'm a developer who lives at the intersection of
+creativity and code. With a passion for building immersive digital
+experiences, I transform ideas into reality using modern web
+technologies.
+
+My journey into development started with curiosity and has evolved
+into a deep commitment to crafting elegant, performant solutions
+that make a difference.
+
+<span class="text-neon-magenta">// Core Values:</span>
+- Write clean, maintainable code
+- Prioritize user experience above all
+- Never stop learning and experimenting
+- Build with accessibility in mind
+
+<span class="text-neon-green">EOF</span>
+					</pre>
+				</div>
+			</section>
+
+			<!-- Skills Tree -->
+			<section class="max-w-4xl mx-auto mb-16">
+				<h2 class="font-display text-3xl font-bold text-neon-magenta mb-6 phosphor-glow">
+					<span class="text-neon-green">&gt;</span> ls -R skills/
+				</h2>
+				<div class="terminal-window">
+					<pre class="font-mono text-sm text-neon-cyan">
+<span class="text-neon-magenta">skills/</span>
+├── <span class="text-neon-green">frontend/</span>
+│   ├── react.js
+│   ├── astro.build
+│   ├── typescript.ts
+│   ├── tailwind.css
+│   └── next.js
+├── <span class="text-neon-green">backend/</span>
+│   ├── node.js
+│   ├── python.py
+│   ├── postgresql.sql
+│   └── api_design.rest
+├── <span class="text-neon-green">tools/</span>
+│   ├── git
+│   ├── docker
+│   ├── vscode
+│   └── figma
+└── <span class="text-neon-green">practices/</span>
+    ├── testing.spec
+    ├── accessibility.a11y
+    ├── performance.perf
+    └── security.sec
+
+4 directories, 16 files
+					</pre>
+				</div>
+			</section>
+
+			<!-- Timeline (Git Log Style) -->
+			<section class="max-w-4xl mx-auto">
+				<h2 class="font-display text-3xl font-bold text-neon-magenta mb-6 phosphor-glow">
+					<span class="text-neon-green">&gt;</span> git log --oneline --graph
+				</h2>
+				<div class="terminal-window space-y-4">
+					<div class="font-mono text-sm">
+						<div class="text-neon-cyan mb-2">
+							<span class="text-neon-magenta">*</span> <span class="text-neon-green">2026</span> Continuing the cyberpunk journey
+						</div>
+						<div class="ml-4 text-neon-cyan/70">
+							Building cutting-edge web experiences with modern frameworks
+						</div>
+					</div>
+
+					<div class="font-mono text-sm">
+						<div class="text-neon-cyan mb-2">
+							<span class="text-neon-magenta">*</span> <span class="text-neon-green">2024</span> Mastered full-stack development
+						</div>
+						<div class="ml-4 text-neon-cyan/70">
+							Deep dive into React, Node.js, and cloud technologies
+						</div>
+					</div>
+
+					<div class="font-mono text-sm">
+						<div class="text-neon-cyan mb-2">
+							<span class="text-neon-magenta">*</span> <span class="text-neon-green">2022</span> First production deployment
+						</div>
+						<div class="ml-4 text-neon-cyan/70">
+							Launched first major project - learned invaluable lessons
+						</div>
+					</div>
+
+					<div class="font-mono text-sm">
+						<div class="text-neon-cyan mb-2">
+							<span class="text-neon-magenta">*</span> <span class="text-neon-green">2020</span> Discovered web development
+						</div>
+						<div class="ml-4 text-neon-cyan/70">
+							Wrote first line of JavaScript - the rest is history
+						</div>
+					</div>
+				</div>
+			</section>
+		</GlitchTransition>
+	</main>
+
+	<!-- Footer -->
+	<footer class="border-t border-neon-cyan/30 py-6 mt-16">
+		<div class="container mx-auto px-6 text-center">
+			<p class="font-mono text-neon-cyan text-sm">
+				<span class="text-neon-green">&gt;</span> System.exit(0)
+				<span class="text-neon-magenta">// 2026</span>
+			</p>
+		</div>
+	</footer>
+</Layout>

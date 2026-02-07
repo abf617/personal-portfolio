@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TerminalNav from '../../components/TerminalNav.astro';
+import GlitchTransition from '../../components/GlitchTransition.jsx';
+
+// Get all projects and sort by year (newest first)
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<Layout title="Projects" description="Browse my portfolio of projects">
+	<TerminalNav />
+
+	<main class="container mx-auto px-6 py-12">
+		<!-- Page Header -->
+		<div class="max-w-4xl mx-auto mb-12">
+			<GlitchTransition client:visible>
+				<div class="terminal-window">
+					<div class="terminal-header">
+						<div class="terminal-button maximize"></div>
+						<div class="terminal-button minimize"></div>
+						<div class="terminal-button"></div>
+					</div>
+					<h1 class="font-display text-4xl md:text-5xl font-bold text-neon-cyan mb-4 phosphor-glow">
+						<span class="text-neon-green">&gt;</span> ls projects/
+					</h1>
+					<div class="font-mono text-sm text-neon-magenta">
+						<span class="text-neon-green">$</span> Listing directory contents... Found {projects.length} items
+					</div>
+				</div>
+			</GlitchTransition>
+		</div>
+
+		<!-- Projects Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+			{projects.map((project) => (
+				<GlitchTransition client:visible glitchOnHover={true}>
+					<a
+						href={`/projects/${project.slug}`}
+						class="terminal-window block group hover:shadow-neon-magenta transition-all duration-300"
+					>
+						<div class="terminal-header">
+							<div class="terminal-button maximize"></div>
+							<div class="terminal-button minimize"></div>
+							<div class="terminal-button"></div>
+						</div>
+
+						{/* Project Title */}
+						<h2 class="font-display text-xl font-bold text-neon-cyan mb-2 group-hover:text-neon-magenta transition-colors phosphor-glow">
+							{project.data.title}
+						</h2>
+
+						{/* Year */}
+						<div class="font-mono text-sm text-neon-green mb-3">
+							<span class="text-neon-cyan">[</span>{project.data.year}<span class="text-neon-cyan">]</span>
+						</div>
+
+						{/* Description */}
+						<p class="font-mono text-sm text-neon-cyan/80 mb-4 line-clamp-3">
+							{project.data.description}
+						</p>
+
+						{/* Tech Stack */}
+						<div class="flex flex-wrap gap-2">
+							{project.data.techStack.map((tech) => (
+								<span class="font-mono text-xs px-2 py-1 border border-neon-cyan/30 text-neon-cyan rounded">
+									{tech}
+								</span>
+							))}
+						</div>
+
+						{/* Featured Badge */}
+						{project.data.featured && (
+							<div class="mt-4 font-mono text-xs text-neon-magenta">
+								<span class="phosphor-glow">★ FEATURED</span>
+							</div>
+						)}
+					</a>
+				</GlitchTransition>
+			))}
+		</div>
+
+		{/* Empty State */}
+		{projects.length === 0 && (
+			<div class="terminal-window max-w-2xl mx-auto text-center py-12">
+				<p class="font-mono text-neon-cyan">
+					<span class="text-neon-magenta">ERROR:</span> No projects found
+				</p>
+				<p class="font-mono text-sm text-neon-cyan/60 mt-2">
+					$ cd src/content/projects/ && touch new-project.md
+				</p>
+			</div>
+		)}
+	</main>
+
+	<!-- Footer -->
+	<footer class="border-t border-neon-cyan/30 py-6 mt-16">
+		<div class="container mx-auto px-6 text-center">
+			<p class="font-mono text-neon-cyan text-sm">
+				<span class="text-neon-green">&gt;</span> System.exit(0)
+				<span class="text-neon-magenta">// 2026</span>
+			</p>
+		</div>
+	</footer>
+</Layout>

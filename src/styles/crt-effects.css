@@ -1,0 +1,188 @@
+/* CRT Screen wrapper with subtle curvature */
+.crt-wrapper {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+/* Scanline effect overlay */
+.crt-wrapper::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: repeating-linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0.15),
+		rgba(0, 0, 0, 0.15) 1px,
+		transparent 1px,
+		transparent 2px
+	);
+	pointer-events: none;
+	z-index: 9999;
+	animation: scanline-flicker 0.1s infinite;
+}
+
+/* Subtle screen flicker animation */
+@keyframes scanline-flicker {
+	0% {
+		opacity: 0.95;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.95;
+	}
+}
+
+/* Phosphor glow on text */
+.phosphor-glow {
+	text-shadow:
+		0 0 5px currentColor,
+		0 0 10px currentColor,
+		0 0 15px currentColor;
+}
+
+/* Chromatic aberration effect for hover states */
+.chromatic-aberration {
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+.chromatic-aberration:hover {
+	text-shadow:
+		-2px 0 #ff00ff,
+		2px 0 #00ffff,
+		0 0 10px currentColor;
+}
+
+/* Neon border glow */
+.neon-border-cyan {
+	border: 2px solid #00F0FF;
+	box-shadow:
+		0 0 5px #00F0FF,
+		0 0 10px #00F0FF,
+		inset 0 0 5px #00F0FF;
+}
+
+.neon-border-magenta {
+	border: 2px solid #FF006E;
+	box-shadow:
+		0 0 5px #FF006E,
+		0 0 10px #FF006E,
+		inset 0 0 5px #FF006E;
+}
+
+.neon-border-green {
+	border: 2px solid #39FF14;
+	box-shadow:
+		0 0 5px #39FF14,
+		0 0 10px #39FF14,
+		inset 0 0 5px #39FF14;
+}
+
+/* Terminal window chrome */
+.terminal-window {
+	background: #1a1a1a;
+	border: 1px solid #00F0FF;
+	border-radius: 6px;
+	box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+	padding: 1rem;
+}
+
+.terminal-header {
+	display: flex;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.terminal-button {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #00F0FF;
+	box-shadow: 0 0 5px #00F0FF;
+}
+
+.terminal-button.minimize {
+	background: #39FF14;
+	box-shadow: 0 0 5px #39FF14;
+}
+
+.terminal-button.maximize {
+	background: #FF006E;
+	box-shadow: 0 0 5px #FF006E;
+}
+
+/* Glitch effect using clip-path */
+@keyframes glitch {
+	0% {
+		clip-path: inset(40% 0 61% 0);
+		transform: translate(0);
+	}
+	20% {
+		clip-path: inset(92% 0 1% 0);
+		transform: translate(-2px, 2px);
+	}
+	40% {
+		clip-path: inset(43% 0 1% 0);
+		transform: translate(2px, -2px);
+	}
+	60% {
+		clip-path: inset(25% 0 58% 0);
+		transform: translate(-2px, 0);
+	}
+	80% {
+		clip-path: inset(54% 0 7% 0);
+		transform: translate(2px, 2px);
+	}
+	100% {
+		clip-path: inset(58% 0 43% 0);
+		transform: translate(0);
+	}
+}
+
+.glitch-hover:hover::before,
+.glitch-hover:hover::after {
+	content: attr(data-text);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+}
+
+.glitch-hover:hover::before {
+	animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+	color: #ff00ff;
+	z-index: -1;
+}
+
+.glitch-hover:hover::after {
+	animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+	color: #00ffff;
+	z-index: -2;
+}
+
+/* Reduced motion: disable animations */
+@media (prefers-reduced-motion: reduce) {
+	.crt-wrapper::before {
+		animation: none;
+		opacity: 0.95;
+	}
+
+	.glitch-hover:hover::before,
+	.glitch-hover:hover::after {
+		animation: none;
+	}
+
+	.chromatic-aberration:hover {
+		transition: none;
+	}
+}

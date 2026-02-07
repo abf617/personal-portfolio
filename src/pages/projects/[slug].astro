@@ -1,0 +1,185 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TerminalNav from '../../components/TerminalNav.astro';
+import GlitchTransition from '../../components/GlitchTransition.jsx';
+
+// Generate static paths for all projects
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.slug },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<Layout title={project.data.title} description={project.data.description}>
+	<TerminalNav />
+
+	<main class="container mx-auto px-6 py-12">
+		<div class="max-w-4xl mx-auto">
+			<GlitchTransition client:visible>
+				<!-- Breadcrumb Navigation -->
+				<div class="font-mono text-sm text-neon-cyan mb-6">
+					<a href="/" class="hover:text-neon-magenta transition-colors">~</a>
+					<span class="text-neon-green"> / </span>
+					<a href="/projects" class="hover:text-neon-magenta transition-colors">projects</a>
+					<span class="text-neon-green"> / </span>
+					<span class="text-neon-magenta">{project.slug}</span>
+				</div>
+
+				<!-- Project Header -->
+				<div class="terminal-window mb-8">
+					<div class="terminal-header">
+						<div class="terminal-button maximize"></div>
+						<div class="terminal-button minimize"></div>
+						<div class="terminal-button"></div>
+					</div>
+
+					<h1 class="font-display text-3xl md:text-5xl font-bold text-neon-cyan mb-4 phosphor-glow">
+						{project.data.title}
+					</h1>
+
+					<div class="flex flex-wrap gap-4 font-mono text-sm mb-4">
+						<div class="text-neon-green">
+							<span class="text-neon-cyan">[YEAR]</span> {project.data.year}
+						</div>
+						{project.data.featured && (
+							<div class="text-neon-magenta phosphor-glow">
+								★ FEATURED
+							</div>
+						)}
+					</div>
+
+					<p class="font-mono text-neon-cyan mb-6">
+						{project.data.description}
+					</p>
+
+					<!-- Tech Stack -->
+					<div class="mb-4">
+						<div class="font-mono text-sm text-neon-green mb-2">
+							<span class="text-neon-cyan">&gt;</span> Tech Stack:
+						</div>
+						<div class="flex flex-wrap gap-2">
+							{project.data.techStack.map((tech) => (
+								<span class="font-mono text-sm px-3 py-1 neon-border-cyan text-neon-cyan rounded">
+									{tech}
+								</span>
+							))}
+						</div>
+					</div>
+
+					<!-- External Link -->
+					{project.data.link && (
+						<div class="mt-6">
+							<a
+								href={project.data.link}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-block terminal-window px-6 py-2 font-mono text-neon-cyan hover:text-neon-magenta transition-colors chromatic-aberration"
+							>
+								<span class="text-neon-green">&gt;</span> View Project
+							</a>
+						</div>
+					)}
+				</div>
+
+				<!-- Project Content -->
+				<article class="terminal-window prose prose-invert max-w-none">
+					<div class="font-mono text-sm text-neon-green mb-4">
+						<span class="text-neon-cyan">$</span> cat README.md
+					</div>
+					<div class="markdown-content text-neon-cyan">
+						<Content />
+					</div>
+				</article>
+
+				<!-- Back Link -->
+				<div class="mt-8">
+					<a
+						href="/projects"
+						class="inline-block font-mono text-neon-cyan hover:text-neon-magenta transition-colors chromatic-aberration"
+					>
+						<span class="text-neon-green">&lt;</span> cd ../
+					</a>
+				</div>
+			</GlitchTransition>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer class="border-t border-neon-cyan/30 py-6 mt-16">
+		<div class="container mx-auto px-6 text-center">
+			<p class="font-mono text-neon-cyan text-sm">
+				<span class="text-neon-green">&gt;</span> System.exit(0)
+				<span class="text-neon-magenta">// 2026</span>
+			</p>
+		</div>
+	</footer>
+</Layout>
+
+<style is:global>
+	/* Style markdown content */
+	.markdown-content h1,
+	.markdown-content h2,
+	.markdown-content h3 {
+		@apply text-neon-magenta font-display font-bold mb-4 mt-6;
+	}
+
+	.markdown-content h1 {
+		@apply text-3xl;
+	}
+
+	.markdown-content h2 {
+		@apply text-2xl;
+	}
+
+	.markdown-content h3 {
+		@apply text-xl;
+	}
+
+	.markdown-content p {
+		@apply mb-4 leading-relaxed;
+	}
+
+	.markdown-content ul,
+	.markdown-content ol {
+		@apply mb-4 ml-6 space-y-2;
+	}
+
+	.markdown-content ul {
+		@apply list-disc;
+	}
+
+	.markdown-content ol {
+		@apply list-decimal;
+	}
+
+	.markdown-content li {
+		@apply text-neon-cyan;
+	}
+
+	.markdown-content code {
+		@apply bg-terminal-gray px-2 py-1 rounded text-neon-green font-mono text-sm;
+	}
+
+	.markdown-content pre {
+		@apply bg-terminal-gray p-4 rounded mb-4 overflow-x-auto;
+	}
+
+	.markdown-content pre code {
+		@apply bg-transparent p-0;
+	}
+
+	.markdown-content a {
+		@apply text-neon-cyan hover:text-neon-magenta transition-colors underline;
+	}
+
+	.markdown-content strong {
+		@apply text-neon-magenta font-bold;
+	}
+</style>
