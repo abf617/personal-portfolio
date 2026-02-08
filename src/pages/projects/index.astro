@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import TerminalNav from '../../components/TerminalNav.astro';
+import TopNav from '../../components/TopNav.astro';
 import Footer from '../../components/Footer.astro';
 import GlitchTransition from '../../components/GlitchTransition.jsx';
 
@@ -12,7 +12,7 @@ const projects = (await getCollection('projects')).sort(
 ---
 
 <Layout title="Projects" description="Browse my portfolio of projects">
-	<TerminalNav />
+	<TopNav />
 
 	<main class="container mx-auto px-6 py-12">
 		<!-- Page Header -->

@@ -110,7 +110,7 @@ export default function TerminalInfo() {
 			</div>
 
 			{/* System Info - Inline on xl+ screens, tooltip on smaller */}
-			<div className="hidden xl:flex items-center gap-3 text-neon-green">
+			<div className="hidden 2xl:flex items-center gap-3 text-neon-green">
 				{/* IP */}
 				<span className="text-neon-cyan">[</span>
 				<span className="text-neon-magenta">IP:</span>
@@ -138,7 +138,7 @@ export default function TerminalInfo() {
 
 			{/* Tooltip for smaller screens */}
 			{isHovered && (
-				<div className="xl:hidden absolute top-full left-0 mt-2 z-50 terminal-window p-4 min-w-[300px] font-mono text-sm text-neon-green animate-fade-in">
+				<div className="2xl:hidden absolute top-full left-0 mt-2 z-50 terminal-window p-4 min-w-[300px] font-mono text-sm text-neon-green animate-fade-in">
 					<div className="space-y-1">
 						<div className="text-neon-cyan border-b border-neon-cyan/30 pb-1 mb-2">
 							&gt; system.info

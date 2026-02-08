@@ -32,7 +32,7 @@ A 90s futurist terminal-inspired portfolio website built with Astro, React, and 
 │   │   ├── MatrixBackground.jsx
 │   │   ├── TypedHeading.jsx
 │   │   ├── GlitchTransition.jsx
-│   │   └── TerminalNav.astro
+│   │   └── TopNav.astro
 │   ├── content/             # Content collections
 │   │   ├── config.ts
 │   │   └── projects/        # Markdown project files

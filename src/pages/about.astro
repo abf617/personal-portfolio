@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TerminalNav from "../components/TerminalNav.astro";
+import TopNav from "../components/TopNav.astro";
 import GlitchTransition from "../components/GlitchTransition.jsx";
 import Footer from "../components/Footer.astro";
 import TypedHeading from "../components/TypedHeading.jsx";
@@ -14,7 +14,7 @@ const { Content } = await aboutPage.render();
   title="About"
   description="Learn more about me and my journey in development"
 >
-  <TerminalNav />
+  <TopNav />
 
   <main class="container mx-auto px-6 py-12">
     <GlitchTransition client:visible>

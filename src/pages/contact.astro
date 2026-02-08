@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TerminalNav from "../components/TerminalNav.astro";
+import TopNav from "../components/TopNav.astro";
 import Footer from "../components/Footer.astro";
 import GlitchTransition from "../components/GlitchTransition.jsx";
 import TypedHeading from "../components/TypedHeading.jsx";
@@ -11,7 +11,7 @@ const contactForm = formsUI.data.strings.contact;
 ---
 
 <Layout title="Contact" description="Get in touch with me">
-  <TerminalNav />
+  <TopNav />
 
   <main class="container mx-auto px-6 py-12">
     <div class="max-w-3xl mx-auto">
@@ -38,7 +38,7 @@ const contactForm = formsUI.data.strings.contact;
           <form
             class="space-y-6"
             id="contact-form"
-            action="https://formspree.io/f/xyzyzyzyz"
+            action="https://formspree.io/f/xvzboyek"
             method="POST"
           >
             <!-- Name Field -->
@@ -52,6 +52,7 @@ const contactForm = formsUI.data.strings.contact;
                 id="name"
                 name="name"
                 required
+                maxlength="100"
                 class="w-full bg-terminal-black border border-neon-cyan/50 text-neon-cyan font-mono px-4 py-2 focus:outline-none focus:border-neon-cyan focus:shadow-neon-cyan rounded"
                 placeholder={contactForm.namePlaceholder}
               />
@@ -68,6 +69,7 @@ const contactForm = formsUI.data.strings.contact;
                 id="email"
                 name="email"
                 required
+                maxlength="254"
                 class="w-full bg-terminal-black border border-neon-cyan/50 text-neon-cyan font-mono px-4 py-2 focus:outline-none focus:border-neon-cyan focus:shadow-neon-cyan rounded"
                 placeholder={contactForm.emailPlaceholder}
               />
@@ -84,21 +86,39 @@ const contactForm = formsUI.data.strings.contact;
                 name="message"
                 required
                 rows="6"
+                maxlength="5000"
                 class="w-full bg-terminal-black border border-neon-cyan/50 text-neon-cyan font-mono px-4 py-2 focus:outline-none focus:border-neon-cyan focus:shadow-neon-cyan rounded resize-none"
                 placeholder={contactForm.messagePlaceholder}></textarea>
             </div>
 
+            <!-- Honeypot field - hidden from humans, catches bots -->
+            <input
+              type="text"
+              name="_gotcha"
+              style="display:none"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+
             <!-- Submit Button -->
             <button
               type="submit"
-              class="terminal-window px-6 py-3 font-mono text-neon-cyan hover:text-neon-magenta transition-colors duration-300 chromatic-aberration w-full md:w-auto"
+              id="submit-button"
+              class="terminal-window px-6 py-3 font-mono text-neon-cyan hover:text-neon-magenta transition-colors duration-300 chromatic-aberration w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-neon-cyan"
             >
               <span class="text-neon-green">{contactForm.submitButtonKey}</span>
               {contactForm.submitButtonText}
             </button>
 
             <!-- Status Message -->
-            <div id="form-status" class="hidden font-mono text-sm mt-4"></div>
+            <div
+              id="form-status"
+              class="hidden font-mono text-sm mt-4"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></div>
           </form>
         </div>
 
@@ -134,61 +154,105 @@ const contactForm = formsUI.data.strings.contact;
 </Layout>
 
 <script>
-  // Handle form submission
-  const form = document.getElementById(
-    "contact-form",
-  ) as HTMLFormElement | null;
-  const status = document.getElementById("form-status");
+  // Handle form submission - wait for React component to render
 
-  if (form && status) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  // Function to initialize form handling
+  function initializeForm() {
+    const form = document.getElementById(
+      "contact-form",
+    ) as HTMLFormElement | null;
+    const status = document.getElementById("form-status");
+    const submitButton = document.getElementById(
+      "submit-button",
+    ) as HTMLButtonElement | null;
 
-      // Show loading message
-      status.classList.remove("hidden");
-      status.className = "font-mono text-sm mt-4 text-neon-cyan";
-      status.textContent = "> Sending message... [████░░░░░░] 40%";
+    if (form && status && submitButton) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-      try {
-        // Get form data
+        // Get form data FIRST (before disabling inputs)
         const formData = new FormData(form);
 
-        // Submit to Formspree
-        const response = await fetch(form.action, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "application/json",
-          },
-        });
+        // Get all form inputs
+        const inputs = form.querySelectorAll(
+          "input:not([name='_gotcha']), textarea, button",
+        ) as NodeListOf<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>;
 
-        if (response.ok) {
-          status.className = "font-mono text-sm mt-4 text-neon-green";
+        // Disable all inputs during submission
+        inputs.forEach((input) => (input.disabled = true));
+
+        // Show loading message (and clear any previous error)
+        status.classList.remove("hidden");
+        status.className = "font-mono text-sm mt-4 text-neon-cyan";
+        status.textContent = "> Sending message... [████░░░░░░] 40%";
+
+        try {
+
+          // Submit to Formspree
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (response.ok) {
+            status.className = "font-mono text-sm mt-4 text-neon-green";
+            status.textContent =
+              "✓ Message sent successfully! [██████████] 100%\n> Timestamp: " +
+              new Date().toLocaleTimeString();
+
+            // Reset form
+            form.reset();
+
+            // Keep all inputs disabled and success message visible permanently
+          } else {
+            // Parse Formspree error response for better error messages
+            const data = await response.json();
+            const errorMessage =
+              data.error ||
+              data.errors?.[0]?.message ||
+              "Form submission failed";
+            throw new Error(errorMessage);
+          }
+        } catch (error) {
+          status.className = "font-mono text-sm mt-4 text-neon-magenta";
           status.textContent =
-            "✓ Message sent successfully! [██████████] 100%\n> Timestamp: " +
-            new Date().toLocaleTimeString();
+            "✗ Error sending message. Please try again.\n> ERROR: " +
+            (error instanceof Error ? error.message : String(error));
 
-          // Reset form
-          form.reset();
+          // Re-enable all inputs on error so user can try again
+          inputs.forEach((input) => (input.disabled = false));
 
-          // Hide status after 5 seconds
-          setTimeout(() => {
-            status.classList.add("hidden");
-          }, 5000);
-        } else {
-          throw new Error("Form submission failed");
+          // Error message stays visible until next submission attempt
         }
-      } catch (error) {
-        status.className = "font-mono text-sm mt-4 text-neon-magenta";
-        status.textContent =
-          "✗ Error sending message. Please try again.\n> ERROR: " +
-          (error as Error).message;
+      });
 
-        // Hide status after 5 seconds
-        setTimeout(() => {
-          status.classList.add("hidden");
-        }, 5000);
+      return true;
+    }
+
+    return false;
+  }
+
+  // Try to initialize immediately
+  if (!initializeForm()) {
+    // If not found, wait for elements to appear (React hydration)
+    const observer = new MutationObserver(() => {
+      if (initializeForm()) {
+        observer.disconnect();
       }
     });
+
+    // Watch for changes in the body
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Fallback: stop observing after 5 seconds
+    setTimeout(() => {
+      observer.disconnect();
+    }, 5000);
   }
 </script>

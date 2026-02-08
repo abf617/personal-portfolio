@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TerminalNav from "../components/TerminalNav.astro";
+import TopNav from "../components/TopNav.astro";
 import Footer from "../components/Footer.astro";
 import TypedHeading from "../components/TypedHeading.jsx";
 import GlitchTransition from "../components/GlitchTransition.jsx";
@@ -53,7 +53,7 @@ const certificationsTimeline = certificationsEntries
 ---
 
 <Layout title="Experience">
-  <TerminalNav />
+  <TopNav />
 
   <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
     <GlitchTransition client:only="react" trigger={true}>
@@ -72,7 +72,7 @@ const certificationsTimeline = certificationsEntries
         </div>
       </div>
 
-      <div class="flex flex-col lg:flex-row gap-8">
+      <div class="flex flex-col gap-8 lg:flex-row">
         <!-- Experience Timeline (Left/Main Column) -->
         <div class="flex-1 space-y-8">
           {
@@ -80,21 +80,10 @@ const certificationsTimeline = certificationsEntries
               <ExperienceCard job={job} index={index} />
             ))
           }
-
-          <div class="mt-12 terminal-window text-center">
-            <div class="text-neon-magenta font-mono text-sm mb-4">
-              <span class="text-neon-green">&gt;</span> Total Experience: <span
-                class="text-neon-cyan font-bold">10+ Years</span
-              >
-            </div>
-            <div class="text-neon-cyan/70 font-mono text-xs">
-              System.Career.Status: <span class="text-neon-green">Active</span>
-            </div>
-          </div>
         </div>
 
         <!-- Right Sidebar (Skills, Education, Certifications) -->
-        <aside class="hidden lg:block lg:w-80 flex-shrink-0">
+        <aside class="w-full lg:w-80 flex-shrink-0">
           <div class="flex flex-col gap-6">
             <!-- Skills Tree -->
             <div class="terminal-window flex flex-col">
@@ -139,6 +128,17 @@ ${categoryData.items.map((skill: string, skillIndex: number) => {
             />
           </div>
         </aside>
+      </div>
+
+      <div class="mt-12 terminal-window text-center max-w-4xl mx-auto">
+        <div class="text-neon-magenta font-mono text-sm mb-4">
+          <span class="text-neon-green">&gt;</span> Total Experience: <span
+            class="text-neon-cyan font-bold">10+ Years</span
+          >
+        </div>
+        <div class="text-neon-cyan/70 font-mono text-xs">
+          System.Career.Status: <span class="text-neon-green">Active</span>
+        </div>
       </div>
     </GlitchTransition>
   </main>

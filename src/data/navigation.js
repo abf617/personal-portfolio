@@ -25,5 +25,5 @@ export const navigation = [
 export const homeNav = {
 	path: '/',
 	label: 'Home',
-	terminalLabel: '> home'
+	terminalLabel: '> cd /home'
 };

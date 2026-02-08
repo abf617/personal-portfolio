@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import TerminalNav from '../../components/TerminalNav.astro';
+import TopNav from '../../components/TopNav.astro';
 import Footer from '../../components/Footer.astro';
 import GlitchTransition from '../../components/GlitchTransition.jsx';
 
@@ -23,7 +23,7 @@ const { Content } = await project.render();
 ---
 
 <Layout title={project.data.title} description={project.data.description}>
-	<TerminalNav />
+	<TopNav />
 
 	<main class="container mx-auto px-6 py-12">
 		<div class="max-w-4xl mx-auto">
