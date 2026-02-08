@@ -7,27 +7,172 @@ import ConsoleGreeting from '../components/ConsoleGreeting.astro';
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
+	keywords?: string;
 }
 
 const {
 	title = 'Allen Aronis Web Development',
-	description = '90s futurist cyberpunk portfolio website showcasing web development expertise'
+	description = 'Portland-based web developer specializing in React, Node.js, and modern web applications. Expert in full-stack development, cloud architecture, and responsive design.',
+	image = '/og-image.jpg',
+	keywords = 'web developer Portland, Portland web developer, React developer Portland, full-stack developer, Node.js developer, web development Portland Maine, freelance web developer Portland, software engineer Portland'
 } = Astro.props;
 
 const fullTitle = title === 'Allen Aronis Web Development' ? title : `${title} | Allen Aronis Web Development`;
+const siteUrl = Astro.site || 'https://www.allenaroniswebdevelopment.com';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImageURL = new URL(image, siteUrl);
 ---
 
 <!doctype html>
+<!--
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║     █████╗ ██╗     ██╗     ███████╗███╗   ██╗                     ║
+║    ██╔══██╗██║     ██║     ██╔════╝████╗  ██║                     ║
+║    ███████║██║     ██║     █████╗  ██╔██╗ ██║                     ║
+║    ██╔══██║██║     ██║     ██╔══╝  ██║╚██╗██║                     ║
+║    ██║  ██║███████╗███████╗███████╗██║ ╚████║                     ║
+║    ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═══╝                     ║
+║                                                                   ║
+║     █████╗ ██████╗  ██████╗ ███╗   ██╗██╗███████╗                 ║
+║    ██╔══██╗██╔══██╗██╔═══██╗████╗  ██║██║██╔════╝                 ║
+║    ███████║██████╔╝██║   ██║██╔██╗ ██║██║███████╗                 ║
+║    ██╔══██║██╔══██╗██║   ██║██║╚██╗██║██║╚════██║                 ║
+║    ██║  ██║██║  ██║╚██████╔╝██║ ╚████║██║███████║                 ║
+║    ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝                 ║
+║                                                                   ║
+║               W E B   D E V E L O P M E N T                       ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+Get in touch: https://www.allenaroniswebdevelopment.com/contact
+
+Built with Astro, React, and Tailwind CSS
+
+-->
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- Primary Meta Tags -->
+		<title>{fullTitle}</title>
+		<meta name="title" content={fullTitle} />
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content="Allen Aronis" />
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#00F0FF" />
+
+		<!-- Canonical URL -->
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageURL} />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:site_name" content="Allen Aronis Web Development" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={fullTitle} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImageURL} />
+
+		<!-- Geo Tags for Local SEO -->
+		<meta name="geo.region" content="US-ME" />
+		<meta name="geo.placename" content="Portland" />
+		<meta name="geo.position" content="43.6591;-70.2568" />
+		<meta name="ICBM" content="43.6591, -70.2568" />
+
+		<!-- Favicon -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<meta name="generator" content={Astro.generator} />
-		<title>{fullTitle}</title>
+
+		<!-- Structured Data (JSON-LD) -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Allen Aronis",
+				"url": "https://www.allenaroniswebdevelopment.com",
+				"image": "https://www.allenaroniswebdevelopment.com/og-image.jpg",
+				"jobTitle": "Full Stack Web Developer",
+				"description": "Portland, Maine-based full-stack web developer specializing in React, Node.js, and modern web applications.",
+				"address": {
+					"@type": "PostalAddress",
+					"addressLocality": "Portland",
+					"addressRegion": "ME",
+					"addressCountry": "US"
+				},
+				"sameAs": [
+					"https://github.com/allenaronis",
+					"https://linkedin.com/in/allenaronis"
+				],
+				"knowsAbout": [
+					"React",
+					"Node.js",
+					"JavaScript",
+					"TypeScript",
+					"Full Stack Development",
+					"Web Development",
+					"Cloud Architecture",
+					"Azure",
+					"AWS"
+				],
+				"worksFor": {
+					"@type": "Organization",
+					"name": "Allen Aronis Web Development"
+				}
+			}
+		</script>
+
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "LocalBusiness",
+				"name": "Allen Aronis Web Development",
+				"description": "Professional web development services in Portland, Maine. Specializing in React, Node.js, and full-stack applications.",
+				"url": "https://www.allenaroniswebdevelopment.com",
+				"telephone": "Contact via website",
+				"address": {
+					"@type": "PostalAddress",
+					"addressLocality": "Portland",
+					"addressRegion": "ME",
+					"addressCountry": "US"
+				},
+				"geo": {
+					"@type": "GeoCoordinates",
+					"latitude": "43.6591",
+					"longitude": "-70.2568"
+				},
+				"areaServed": {
+					"@type": "GeoCircle",
+					"geoMidpoint": {
+						"@type": "GeoCoordinates",
+						"latitude": "43.6591",
+						"longitude": "-70.2568"
+					},
+					"geoRadius": "50000"
+				},
+				"priceRange": "$$",
+				"openingHours": "Mo-Fr 09:00-17:00",
+				"sameAs": [
+					"https://github.com/allenaronis",
+					"https://linkedin.com/in/allenaronis"
+				]
+			}
+		</script>
 	</head>
 	<body class="flex flex-col min-h-screen">
 		<ConsoleGreeting />

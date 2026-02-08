@@ -14,6 +14,7 @@ export default function GlitchTransition({
 	useEffect(() => {
 		onCompleteRef.current = onComplete;
 	}, [onComplete]);
+
 	const glitch = useGlitch({
 		playMode: trigger ? 'always' : 'hover',
 		createContainers: true,

@@ -16,7 +16,7 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 	const [isLoading, setIsLoading] = useState(false);
 	const [loadingProgress, setLoadingProgress] = useState(0);
 	const [userInput, setUserInput] = useState('');
-	const [bootComplete, setBootComplete] = useState(true);
+	const [bootComplete, setBootComplete] = useState(false);
 	const [glitchTrigger, setGlitchTrigger] = useState(false);
 	const [pendingPath, setPendingPath] = useState(null);
 
@@ -59,6 +59,7 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 			if (progress < 100) {
 				animationFrameId = requestAnimationFrame(updateProgress);
 			} else {
+				// Navigate after brief delay
 				setTimeout(() => {
 					window.location.href = targetPath;
 				}, 200);
@@ -151,7 +152,7 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 	if (!bootComplete) return null;
 
 	return (
-		<div className="terminal-window max-w-3xl mx-auto p-6" role="navigation" aria-label="Main navigation menu">
+		<div className="terminal-window max-w-xl mx-auto p-6" role="navigation" aria-label="Main navigation menu">
 			{!typingComplete ? (
 				<TypedHeading
 					strings={[uiStrings.bootMessage || 'SYSTEM BOOT COMPLETE // WELCOME // SELECT OPERATION:']}
@@ -206,10 +207,6 @@ export default function TerminalMenu({ prefersReducedMotion = false, uiStrings =
 							<div className="mt-4 text-neon-magenta">
 								&gt; {userInput}<span className="terminal-cursor">_</span>
 							</div>
-
-							{/* <div className="mt-6 pt-8 text-neon-cyan/50 text-sm">
-								Select an option
-							</div> */}
 							</div>
 						) : (
 							<div className="space-y-2 font-mono text-neon-green loading-bar" aria-live="assertive">

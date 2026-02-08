@@ -1,0 +1,9 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.allenaroniswebdevelopment.com/sitemap-index.xml
+
+# Crawl-delay (optional, helps prevent overload)
+Crawl-delay: 1

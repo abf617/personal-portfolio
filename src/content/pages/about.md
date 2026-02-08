@@ -4,7 +4,7 @@ terminalCommand: "> cat about.txt"
 status: "Reading file: ~/about.txt"
 ---
 
-Hello, world! I'm a full-stack developer with 10+ years of experience architecting and building enterprise-level web applications. My expertise spans the entire development lifecycle—from designing robust backend systems in C# .NET to crafting responsive frontends with React and modern JavaScript frameworks.
+I'm a full-stack developer with 10+ years of experience architecting and building enterprise-level web applications. My expertise spans the entire development lifecycle—from designing robust backend systems in C# .NET to crafting responsive frontends with React and modern JavaScript frameworks.
 
 I specialize in complex cloud infrastructure, having orchestrated full-scale migrations to Azure, architected CI/CD pipelines with Docker and Jenkins, and optimized high-traffic applications for performance and scalability. Whether I'm diving deep into MS SQL database optimizations, building custom CMS solutions, or implementing modern DevOps practices, I approach every challenge with a focus on clean, maintainable code and thoughtful architecture.
 
