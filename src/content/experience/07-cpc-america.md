@@ -4,7 +4,7 @@ company: "CPC America"
 location: "Needham, MA"
 period: "Dec 2013 - Jul 2014"
 duration: "8 mos"
-type: "Full-time"
+type: "Part-time"
 order: 7
 skills:
   - "SharePoint"

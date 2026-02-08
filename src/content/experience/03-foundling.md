@@ -1,7 +1,7 @@
 ---
 title: "Application Engineer"
 company: "The New York Foundling"
-location: "Greater New York City Area"
+location: "New York, NY"
 period: "Mar 2016 - Apr 2019"
 duration: "3 yrs 2 mos"
 type: "Full-time"

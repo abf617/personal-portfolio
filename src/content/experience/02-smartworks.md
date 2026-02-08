@@ -1,7 +1,7 @@
 ---
 title: "Web Developer"
 company: "Smartworks Solutions, LLC"
-location: "Greater Boston Area"
+location: "Boston, MA"
 period: "Jun 2019 - Mar 2023"
 duration: "3 yrs 10 mos"
 type: "Full-time"

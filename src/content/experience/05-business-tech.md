@@ -1,7 +1,7 @@
 ---
 title: "Systems Engineer"
 company: "Business Technology Partners"
-location: "Greater New York City Area"
+location: "New York, NY"
 period: "Aug 2015 - Mar 2016"
 duration: "8 mos"
 type: "Full-time"

@@ -1,7 +1,7 @@
 ---
 title: "Database Consultant"
 company: "Freelancer"
-location: "Greater New York City Area"
+location: "New York, NY"
 period: "Mar 2016 - Mar 2019"
 duration: "3 yrs 1 mo"
 type: "Freelance"
