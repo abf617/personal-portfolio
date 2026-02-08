@@ -20,7 +20,7 @@ const navItems = [
     <TerminalInfo client:load />
 
     <!-- Desktop Navigation -->
-    <ul class="hidden md:flex gap-6 font-mono pr-4">
+    <ul class="hidden min-[801px]:flex gap-6 font-mono pr-4">
       {
         navItems.map(({ path, label, title }) => {
           const isActive = currentPath === path;
@@ -49,15 +49,20 @@ const navItems = [
     <!-- Mobile Navigation (Hamburger) -->
     <button
       id="mobile-menu-button"
-      class="md:hidden text-neon-cyan text-2xl phosphor-glow"
+      class="min-[801px]:hidden flex items-center justify-center text-neon-cyan phosphor-glow hamburger-btn"
       aria-label="Toggle menu"
+      aria-expanded="false"
     >
-      <span class="font-mono">|||</span>
+      <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </button>
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden mt-4 terminal-window">
+  <div id="mobile-menu" class="hidden min-[801px]:hidden mt-4 terminal-window">
     <ul class="font-mono space-y-2">
       {
         navItems.map(({ path, label, title }) => {
@@ -92,6 +97,8 @@ const navItems = [
   if (button && menu) {
     button.addEventListener("click", () => {
       menu.classList.toggle("hidden");
+      button.classList.toggle("active");
+      button.setAttribute("aria-expanded", String(!menu.classList.contains("hidden")));
     });
   }
 </script>
@@ -106,5 +113,57 @@ const navItems = [
     border-bottom: 1px solid rgba(0, 240, 255, 0.3);
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
+  }
+
+  .hamburger-btn {
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .hamburger-icon {
+    width: 1.5rem;
+    height: 1.125rem;
+    position: relative;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-icon span:nth-child(1) {
+    top: 0;
+  }
+
+  .hamburger-icon span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .hamburger-icon span:nth-child(3) {
+    bottom: 0;
+  }
+
+  .hamburger-btn.active .hamburger-icon span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .hamburger-btn.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-btn.active .hamburger-icon span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
   }
 </style>
