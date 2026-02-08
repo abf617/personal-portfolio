@@ -84,9 +84,9 @@ export default function BootAnimation({ uiStrings = {} }) {
       <div className="text-center">
         {animationPhase === 0 && (
           <TypedHeading
-            strings={[uiStrings.bootInitiation || "Welcome... Initiating"]}
+            strings={[uiStrings.bootInitiation || "Welcome... Initiating."]}
             typeSpeed={80}
-            showCursor={true}
+            showCursor={false}
             loop={false}
             className="text-neon-green phosphor-glow text-2xl sm:text-3xl md:text-5xl font-mono whitespace-nowrap"
             onComplete={handleTypingComplete}
