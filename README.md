@@ -1,4 +1,4 @@
-# Cyberpunk Portfolio
+# Personal Portfolio
 
 A 90s futurist terminal-inspired portfolio website built with Astro, React, and Tailwind CSS.
 
