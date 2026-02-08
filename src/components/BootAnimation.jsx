@@ -88,7 +88,7 @@ export default function BootAnimation({ uiStrings = {} }) {
             typeSpeed={80}
             showCursor={true}
             loop={false}
-            className="text-neon-green phosphor-glow text-3xl md:text-5xl font-mono"
+            className="text-neon-green phosphor-glow text-2xl sm:text-3xl md:text-5xl font-mono whitespace-nowrap"
             onComplete={handleTypingComplete}
             prefersReducedMotion={prefersReducedMotion}
           />
@@ -97,7 +97,7 @@ export default function BootAnimation({ uiStrings = {} }) {
         {animationPhase >= 1 && (
           <div
             ref={glitch.ref}
-            className="text-neon-green phosphor-glow text-3xl md:text-5xl font-mono"
+            className="text-neon-green phosphor-glow text-2xl sm:text-3xl md:text-5xl font-mono whitespace-nowrap"
           >
             {uiStrings.bootInitiation || "Welcome... Initiating"}
           </div>
