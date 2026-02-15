@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import useGameEngine from './useGameEngine.js';
-import { usePrefersReducedMotion } from '../../utils/detectMotionPreference.ts';
+import { usePrefersReducedMotion } from '../../../utils/detectMotionPreference.ts';
 
 export default function AsteroidsGame() {
   const prefersReducedMotion = usePrefersReducedMotion();

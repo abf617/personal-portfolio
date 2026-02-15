@@ -165,7 +165,7 @@ export function drawStartScreen(ctx, width, height) {
   setGlow(ctx, COLORS.ASTEROID, 6);
   ctx.fillStyle = COLORS.ASTEROID;
   ctx.font = '14px "Space Mono", monospace';
-  ctx.fillText('[ CYBERPUNK EDITION ]', width / 2, height / 2 - 10);
+  ctx.fillText('[ WEB EDITION ]', width / 2, height / 2 - 10);
   clearGlow(ctx);
 
   // Prompt — blink

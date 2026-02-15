@@ -20,8 +20,8 @@ const GAMES = [
   {
     id: 'snake',
     title: 'SNAKE',
-    path: null,
-    status: 'coming_soon',
+    path: '/games/snake',
+    status: 'ready',
     description: 'Navigate the grid. Consume data packets.',
     controls: 'ARROW KEYS',
     ascii: [
@@ -36,8 +36,8 @@ const GAMES = [
   {
     id: 'tetris',
     title: 'TETRIS',
-    path: null,
-    status: 'coming_soon',
+    path: '/games/tetris',
+    status: 'ready',
     description: 'Stack blocks. Clear lines. Chase the score.',
     controls: 'ARROWS + UP TO ROTATE',
     ascii: [

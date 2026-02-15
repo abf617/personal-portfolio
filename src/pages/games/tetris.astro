@@ -4,12 +4,12 @@ import TopNav from "../../components/TopNav.astro";
 import GlitchTransition from "../../components/GlitchTransition.jsx";
 import Footer from "../../components/Footer.astro";
 import TypedHeading from "../../components/TypedHeading.jsx";
-import AsteroidsGame from "../../components/games/asteroids/AsteroidsGame.jsx";
+import TetrisGame from "../../components/games/tetris/TetrisGame.jsx";
 ---
 
 <Layout
-  title="Asteroids"
-  description="Cyberpunk Asteroids - a retro arcade game with neon wireframe visuals"
+  title="Tetris"
+  description="Cyberpunk Tetris - stack blocks and fight entropy in this neon-drenched arcade game"
 >
   <TopNav />
 
@@ -18,7 +18,7 @@ import AsteroidsGame from "../../components/games/asteroids/AsteroidsGame.jsx";
       <div class="terminal-window max-w-5xl mx-auto mb-8">
         <TypedHeading
           client:visible
-          strings={["> ./asteroids --play"]}
+          strings={["> ./tetris --execute"]}
           typeSpeed={50}
           showCursor={false}
           loop={false}
@@ -31,16 +31,18 @@ import AsteroidsGame from "../../components/games/asteroids/AsteroidsGame.jsx";
       </div>
 
       <div class="max-w-5xl mx-auto mb-8">
-        <AsteroidsGame client:only="react" />
+        <TetrisGame client:only="react" />
       </div>
 
       <div class="terminal-window max-w-5xl mx-auto">
         <div class="font-mono text-xs md:text-sm text-neon-cyan/70 text-center space-y-1">
           <div>
             <span class="text-neon-green">CONTROLS:</span>
-            <span class="mx-2">[↑/W] THRUST</span>
-            <span class="mx-2">[←→/AD] ROTATE</span>
-            <span class="mx-2">[SPACE] FIRE</span>
+            <span class="mx-2">[&#x2190;&#x2192;] MOVE</span>
+            <span class="mx-2">[&#x2191;] ROTATE</span>
+            <span class="mx-2">[&#x2193;] SOFT DROP</span>
+            <span class="mx-2">[SPACE] HARD DROP</span>
+            <span class="mx-2">[C] HOLD</span>
             <span class="mx-2">[ENTER] START</span>
           </div>
         </div>

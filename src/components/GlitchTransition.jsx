@@ -16,7 +16,7 @@ export default function GlitchTransition({
 	}, [onComplete]);
 
 	const glitch = useGlitch({
-		playMode: trigger ? 'always' : 'hover',
+		playMode: trigger ? 'always' : 'manual',
 		createContainers: true,
 		hideOverflow: false,
 		timing: {
@@ -40,6 +40,23 @@ export default function GlitchTransition({
 			hueRotate: true,
 		},
 	});
+
+	const hoverFired = useRef(false);
+
+	useEffect(() => {
+		if (trigger || prefersReducedMotion) return;
+		const el = glitch.ref.current;
+		if (!el) return;
+
+		function onMouseEnter() {
+			if (hoverFired.current) return;
+			hoverFired.current = true;
+			glitch.startGlitch();
+		}
+
+		el.addEventListener('mouseenter', onMouseEnter);
+		return () => el.removeEventListener('mouseenter', onMouseEnter);
+	}, [trigger, prefersReducedMotion, glitch]);
 
 	useEffect(() => {
 		if (trigger && !prefersReducedMotion) {

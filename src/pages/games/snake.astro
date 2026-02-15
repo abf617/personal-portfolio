@@ -4,12 +4,12 @@ import TopNav from "../../components/TopNav.astro";
 import GlitchTransition from "../../components/GlitchTransition.jsx";
 import Footer from "../../components/Footer.astro";
 import TypedHeading from "../../components/TypedHeading.jsx";
-import AsteroidsGame from "../../components/games/asteroids/AsteroidsGame.jsx";
+import SnakeGame from "../../components/games/snake/SnakeGame.jsx";
 ---
 
 <Layout
-  title="Asteroids"
-  description="Cyberpunk Asteroids - a retro arcade game with neon wireframe visuals"
+  title="Snake"
+  description="Cyberpunk Snake - navigate the grid and consume data packets in this neon-drenched arcade game"
 >
   <TopNav />
 
@@ -18,7 +18,7 @@ import AsteroidsGame from "../../components/games/asteroids/AsteroidsGame.jsx";
       <div class="terminal-window max-w-5xl mx-auto mb-8">
         <TypedHeading
           client:visible
-          strings={["> ./asteroids --play"]}
+          strings={["> ./snake --execute"]}
           typeSpeed={50}
           showCursor={false}
           loop={false}
@@ -31,16 +31,14 @@ import AsteroidsGame from "../../components/games/asteroids/AsteroidsGame.jsx";
       </div>
 
       <div class="max-w-5xl mx-auto mb-8">
-        <AsteroidsGame client:only="react" />
+        <SnakeGame client:only="react" />
       </div>
 
       <div class="terminal-window max-w-5xl mx-auto">
         <div class="font-mono text-xs md:text-sm text-neon-cyan/70 text-center space-y-1">
           <div>
             <span class="text-neon-green">CONTROLS:</span>
-            <span class="mx-2">[↑/W] THRUST</span>
-            <span class="mx-2">[←→/AD] ROTATE</span>
-            <span class="mx-2">[SPACE] FIRE</span>
+            <span class="mx-2">[&#x2191;&#x2193;&#x2190;&#x2192;/WASD] MOVE</span>
             <span class="mx-2">[ENTER] START</span>
           </div>
         </div>
