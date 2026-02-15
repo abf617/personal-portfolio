@@ -110,7 +110,7 @@ export default function TerminalMenu({
       } else if (e.key === "Enter") {
         e.preventDefault();
         handleSelection(selectedIndex);
-      } else if (/^[1-3]$/.test(e.key)) {
+      } else if (/^[1-4]$/.test(e.key)) {
         e.preventDefault();
         handleSelection(parseInt(e.key) - 1);
       } else if (/^[a-zA-Z]$/.test(e.key)) {

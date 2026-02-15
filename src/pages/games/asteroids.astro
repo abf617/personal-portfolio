@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TopNav from "../../components/TopNav.astro";
+import GlitchTransition from "../../components/GlitchTransition.jsx";
+import Footer from "../../components/Footer.astro";
+import TypedHeading from "../../components/TypedHeading.jsx";
+import AsteroidsGame from "../../components/games/AsteroidsGame.jsx";
+---
+
+<Layout
+  title="Asteroids"
+  description="Cyberpunk Asteroids - a retro arcade game with neon wireframe visuals"
+>
+  <TopNav />
+
+  <main class="container mx-auto px-6 py-12">
+    <GlitchTransition client:visible>
+      <div class="terminal-window max-w-5xl mx-auto mb-8">
+        <TypedHeading
+          client:visible
+          strings={["> ./asteroids --play"]}
+          typeSpeed={50}
+          showCursor={false}
+          loop={false}
+          onComplete={() => {}}
+          className="font-display text-3xl md:text-4xl font-bold text-neon-cyan phosphor-glow mb-4"
+        />
+        <div class="font-mono text-xs text-neon-cyan/50 mt-2">
+          <a href="/games" class="hover:text-neon-magenta transition-colors">&lt; back to arcade</a>
+        </div>
+      </div>
+
+      <div class="max-w-5xl mx-auto mb-8">
+        <AsteroidsGame client:only="react" />
+      </div>
+
+      <div class="terminal-window max-w-5xl mx-auto">
+        <div class="font-mono text-xs md:text-sm text-neon-cyan/70 text-center space-y-1">
+          <div>
+            <span class="text-neon-green">CONTROLS:</span>
+            <span class="mx-2">[↑/W] THRUST</span>
+            <span class="mx-2">[←→/AD] ROTATE</span>
+            <span class="mx-2">[SPACE] FIRE</span>
+            <span class="mx-2">[ENTER] START</span>
+          </div>
+        </div>
+      </div>
+    </GlitchTransition>
+  </main>
+
+  <Footer />
+</Layout>

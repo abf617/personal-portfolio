@@ -219,6 +219,55 @@
 	animation: fade-in 0.2s ease-out;
 }
 
+/* CRT hit glitch — triggered by game asteroid destruction events */
+@keyframes crt-hit-interference {
+	0% {
+		filter: none;
+		transform: translate(0);
+	}
+	15% {
+		filter: brightness(1.4) saturate(1.6);
+		transform: translate(-1px, 1px);
+	}
+	30% {
+		filter: brightness(0.8) hue-rotate(20deg);
+		transform: translate(2px, 0);
+	}
+	50% {
+		filter: brightness(1.2) saturate(1.3);
+		transform: translate(-1px, -1px);
+	}
+	70% {
+		filter: brightness(0.9) hue-rotate(-10deg);
+		transform: translate(1px, 0);
+	}
+	100% {
+		filter: none;
+		transform: translate(0);
+	}
+}
+
+.crt-hit-glitch {
+	animation: crt-hit-interference 0.15s ease-out;
+}
+
+/* Scanline burst that overlays the game area on hit */
+.crt-hit-glitch::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: repeating-linear-gradient(
+		0deg,
+		transparent,
+		transparent 2px,
+		rgba(0, 240, 255, 0.04) 2px,
+		rgba(0, 240, 255, 0.04) 4px
+	);
+	pointer-events: none;
+	z-index: 10;
+	mix-blend-mode: screen;
+}
+
 /* Reduced motion: disable animations */
 @media (prefers-reduced-motion: reduce) {
 	.crt-wrapper::before {
@@ -241,5 +290,13 @@
 
 	.loading-bar {
 		animation: none;
+	}
+
+	.crt-hit-glitch {
+		animation: none;
+	}
+
+	.crt-hit-glitch::after {
+		display: none;
 	}
 }

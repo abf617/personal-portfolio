@@ -19,6 +19,13 @@ export const navigation = [
 		path: '/contact',
 		terminalLabel: '> mail contact@',
 		keywords: ['contact', '3']
+	},
+	{
+		id: 4,
+		label: 'Games',
+		path: '/games',
+		terminalLabel: '> ./play --arcade',
+		keywords: ['games', 'game', 'play', 'arcade', '4']
 	}
 ];
 
