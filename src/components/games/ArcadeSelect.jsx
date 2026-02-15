@@ -49,6 +49,22 @@ const GAMES = [
       '  │████─┘    ',
     ],
   },
+  {
+    id: 'tempest',
+    title: 'FIREWALL',
+    path: '/games/tempest',
+    status: 'ready',
+    description: 'Defend the data tunnel. Purge all intrusions.',
+    controls: 'LEFT/RIGHT + SPACE + Z',
+    ascii: [
+      '     /|\\     ',
+      '    / | \\    ',
+      '   /  |  \\   ',
+      '  /  -+-  \\  ',
+      ' /  / | \\  \\ ',
+      '/  /  |  \\  \\',
+    ],
+  },
 ];
 
 export default function ArcadeSelect({ prefersReducedMotion = false }) {

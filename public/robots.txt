@@ -1,6 +1,8 @@
 # Allow all crawlers
 User-agent: *
 Allow: /
+Disallow: /projects
+Disallow: /games
 
 # Sitemap location
 Sitemap: https://www.allenaroniswebdevelopment.com/sitemap-index.xml

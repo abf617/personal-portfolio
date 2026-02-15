@@ -15,17 +15,10 @@ export const navigation = [
 	},
 	{
 		id: 3,
-		label: 'Games',
-		path: '/games',
-		terminalLabel: '> ./play --arcade',
-		keywords: ['games', 'game', 'play', 'arcade', '3']
-	},
-	{
-		id: 4,
 		label: 'Contact',
 		path: '/contact',
 		terminalLabel: '> mail contact@',
-		keywords: ['contact', '4']
+		keywords: ['contact', '3']
 	}
 ];
 

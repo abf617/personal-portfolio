@@ -110,9 +110,12 @@ export default function TerminalMenu({
       } else if (e.key === "Enter") {
         e.preventDefault();
         handleSelection(selectedIndex);
-      } else if (/^[1-4]$/.test(e.key)) {
-        e.preventDefault();
-        handleSelection(parseInt(e.key) - 1);
+      } else if (/^[1-9]$/.test(e.key)) {
+        const idx = parseInt(e.key) - 1;
+        if (idx < menuOptions.length) {
+          e.preventDefault();
+          handleSelection(idx);
+        }
       } else if (/^[a-zA-Z]$/.test(e.key)) {
         // Inline text input logic to avoid dependency churn
         const newInput = (userInputRef.current + e.key).toLowerCase();

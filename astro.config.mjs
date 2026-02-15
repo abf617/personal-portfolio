@@ -9,7 +9,9 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.allenaroniswebdevelopment.com',
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap({
+    filter: (page) => !page.includes('/projects') && !page.includes('/games'),
+  })],
 
   vite: {
     plugins: [tailwindcss()]
